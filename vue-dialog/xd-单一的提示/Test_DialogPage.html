@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>表单测试页面</title>
+	<link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/xdialog.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="../../libs/vue.js"></script>
+	<script src="../../libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="dialog-test">
+
+	
+<!-- Button -->
+	<!-- 响应框使用ElementUI的MessageBox -->
+	<!--https://element.eleme.cn/2.0/#/zh-CN/component/message-box -->
+	<el-button @click="openMsgBox">响应----</el-button>
+	<el-button @click="isdgExport=true">导出---</el-button>
+	<el-button @click="isdgMail=true">邮寄信息</el-button>
+	<el-button @click="youji2">邮寄信息2</el-button>
+	<el-button @click="isdgReject=true">驳回信息</el-button>
+
+<!-- DomTag -->
+	<!-- 导出学员 -->
+	<dg-export :vlist="vlist"></dg-export>
+	
+	<!-- 邮寄信息 -->
+	<!-- 参数依次是: 快递单号,邮寄公司,是否只读 -->
+	
+	<!-- 显示模式 使用这个,需要单号/公司/是否只读-->
+	<dg-mail :mail_code="mail_code" :mail_firm="mail_firm" :mail_read_only="mail_read_only"></dg-mail>
+	
+	<!-- 表单模式 使用这个,只传是否只读即可-->
+	<!-- <dg-mail :mail_read_only="mail_read_only"></dg-mail> -->
+	
+	<!-- 驳回信息 -->
+	<dg-reject></dg-reject>
+
+</div>
+</body>
+
+<script type="text/javascript">
+new Vue({
+	el:'#dialog-test',
+	data(){return{
+// 条件判断
+		isdgExport:false,		//导出
+		isdgMail:false,			//邮寄信息
+		isdgReject:false,		//驳回信息
+
+// 测试数据
+		//dg-export的测试数据:
+		//班级列表,可以直接先获取数据;
+		vlist:[
+			{id:'1',name:'三年a班'},
+			{id:'2',name:'三年b班'},
+			{id:'3',name:'三年c班'},
+			{id:'4',name:'三年d班'},
+			{id:'5',name:'三年e班'},
+			{id:'6',name:'三年f班'},
+			{id:'7',name:'三年g班'},
+			{id:'8',name:'三年h班'},
+		],
+		
+		//dg-mail的测试数据;
+		//快递公司列表, mailFirmList更改的话, 对应的dg-mail组件一样的这个变量也要修改;
+		mailFirmList:[
+			'顺丰',
+			'邮政',
+			'中通',
+			'申通',
+			'圆通'
+		],
+		
+		//传递的数据
+		mail_code:"201910221021",		//单号
+		mail_firm:"邮政快递",			//公司
+		mail_read_only:true,			//只读
+		
+		
+		
+		
+	}},
+	methods:{
+		
+		youji2(){
+			this.mail_code = '123456';
+			this.mail_firm = '顺丰快递';
+			this.isdgMail=true;
+		},
+		
+		//dg-confirm
+		//对话框
+		// https://element.eleme.cn/2.0/#/zh-CN/component/message-box
+		 openMsgBox(){
+			 this.$prompt('请输入邮箱', '提示', {
+			 	confirmButtonText: '确定',
+			 	cancelButtonText: '取消',
+			 	inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+			 	inputErrorMessage: '邮箱格式不正确'
+			 }).then(({ value }) => {
+			 	this.$message({
+			 		type: 'success',
+			 		message: '你的邮箱是: ' + value
+			 	});
+			 }).catch(() => {
+			 		this.$message({
+			 		type: 'info',
+			 		message: '取消输入'
+			 	});       
+			 });
+		 }, //end of openMsgBox;
+	},
+	mounted(){document.body.style.visibility="visible"},
+	components:{
+		'dg-export':httpVueLoader('dg-export.vue'),
+		'dg-mail':httpVueLoader('dg-mail.vue'),
+		'dg-reject':httpVueLoader('dg-reject.vue')
+	},
+})
+</script>
+
+</html>

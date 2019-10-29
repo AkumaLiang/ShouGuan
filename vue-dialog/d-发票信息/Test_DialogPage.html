@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>表单测试页面</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/xdialog.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="../../libs/vue.js"></script>
+	<script src="../../libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="dialog-test">
+	
+	<el-button @click="isdialogInvoice=true">发票详情</el-button>
+	<el-button @click="isdialogInvoiceSeto=true">申请开票</el-button>
+	<el-button @click="handelKp">申请开票2</el-button>
+	
+	<dialog-invoice-info :v_invoice="vInvoice" :_is_only_show="isOnlyShow"></dialog-invoice-info>
+	
+	
+	<dialog-invoice-seto :v_base_info="v_base_info" ></dialog-invoice-seto>
+	
+</div>
+</body>
+
+<script type="text/javascript">
+new Vue({
+	el:'#dialog-test',
+	data(){return{
+		isdialogInvoiceSeto:false,	//申请开票
+		
+		
+		isOnlyShow:true,			//是否只显示开票
+		isdialogInvoice:false,		//发票详情
+		
+		
+		//【发票详情】=================================>dialog-invoice-info.vue
+		vInvoice:{
+			invoiceType:1,
+			firmName:'河北优枫网络科技有限公司',
+			ein:'10000101100',
+			accountName:'中国建设银行石家庄建设大街支行',
+			accountNo:'6217000130010000000',
+			mobile:'15232100000',
+			address:'河北省石家庄市裕华区长江大道100号',
+			// line;
+			materialType:1,		//  教材邮寄  1是  0否
+			mailType:1,			//邮寄方式  1单独邮寄  0统一邮寄
+			post_code:'20190101010100',
+			post_company:'顺丰',
+			
+			note:'内容内容内容内容内容内容',
+			invoiceCourierNo:'20190101010100',
+			invoiceCourierName:'顺丰',
+			materialCourierNo:'20190101010100',
+			materialCourierName:'顺丰'
+		},
+		
+
+				
+		//【申请开票|(一级管理员(财务))开票】=================================>dialog-invoice-seto.vue
+		v_base_info:{
+			firmName:'--',	//公司名称
+			ein:'--',			//税号  
+			mobile:'--', 		//电话
+			address:'--100号', 	//地址
+		}
+	}},
+	mounted(){document.body.style.visibility="visible"},
+	methods:{
+		handelKp(){
+			this.v_base_info.firmName = '公司名字名字名字名字名字';
+			this.isdialogInvoiceSeto=true;
+		}
+	},
+	components:{
+		'dialog-invoice-info':httpVueLoader('dialog-invoice-info.vue'),
+		'dialog-invoice-seto':httpVueLoader('dialog-invoice-seto.vue')
+	},
+})
+</script>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>表单测试页面</title>
+	<link rel="stylesheet" type="text/css" href="../../css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/xdialog.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="../../libs/vue.js"></script>
+	<script src="../../libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="dialog-test">
+	<el-button @click="isdialogStatus=true">学生状态</el-button>
+	<el-button @click="testStudnet2">学生状态2</el-button>
+	<dialog-student-status :step="step"></dialog-student-status>	
+</div>
+</body>
+
+
+<script type="text/javascript">
+new Vue({
+	el:'#dialog-test',
+	data(){return{
+
+		//学生状态
+		isdialogStatus:false,
+		//【状态详情】=================================>dialog-student-status.vue
+		//状态详情
+		step:[
+		{title:"学员报名 2019-09-05 16:44",text:"这是一段很长很长很长的描述性文字"},
+			{title:"学员报名 2019-09-05 16:44",text:"这是一段很长长很长的描述性文字"},
+			{title:"学员报名 2019-09-05 16:44",text:"这是一段很长很长的描述性文字"},
+			{title:"学员报名 2019-09-05 16:44",text:"这是一段很长的描述性文字"},
+			{title:"学员报名 2019-09-05 16:44",text:"这是一段很长述性文字"},
+			{title:"学员报名 2019-09-05 16:44",text:"这是一段很长",},
+		],
+		//step_last:1,
+	}},
+	mounted(){document.body.style.visibility="visible"},
+	methods:{
+		testStudnet2(){
+			this.step=[
+				{title:"学员报名 2019-09-05 16:44",text:"这是一不咋的的发的的反对法"},
+				{title:"学员报名 2019-09-05 16:44",text:"的发的的反对法"},
+				{title:"学员报名 2019-09-05 16:44",text:"的发的的反对法"},
+				{title:"学员报名 2019-09-05 16:44",text:"的发的的反对法"}
+			];
+			this.isdialogStatus=true;
+		}
+	},
+	components:{
+		'dialog-student-status':httpVueLoader('dialog-student-status.vue')
+	},
+})
+</script>
+
+</html>

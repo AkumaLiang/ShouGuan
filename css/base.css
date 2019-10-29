@@ -1,0 +1,24 @@
+@charset "utf-8";
+*{margin:0;padding:0;font-family:"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif}
+li{list-style:none}body{visibility:hidden}a{color:#fff;text-decoration:none}
+#content{padding:0;margin:0}
+/* 所有view组件的通用样式 */
+/* #vc-l1 */
+.vtitle{margin-bottom:20px}
+/* #vc-l1-title */
+.vtitle-val{font-size:24px;font-weight:bold}
+/* #vc-l1 */
+.vtitle :last-child{text-align:right}
+/* #vc-l3 */
+.vlist{padding:20px;background-color:#fff}
+/* #vc-l3-table */
+.vlist-table{margin:40px 0}
+/* #vc-l3-table-page */
+.vlist-table-page{text-align:right;margin-top:20px}
+.vtable-btn{float:left}
+/* #vc-l3 */
+.vlist.el-col{text-align:center}
+/* tbtn 文本按钮:三无按钮;如果直接btn会导致第三方样式出现问题;xbtn 另一种按钮;*/
+.tbtn{outline:none;border:none;background:none}
+/* 表单里面,两个item的距离 */
+.row-gr{margin-bottom: 10px;}

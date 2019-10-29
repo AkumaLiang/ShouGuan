@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>表单测试页面</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/xdialog.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="../../libs/vue.js"></script>
+	<script src="../../libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="dialog-test">
+	
+	<!-- 按钮区域 -->
+	<el-button @click="isCertificateCheck=true">查看证书</el-button>
+	<el-button @click="isCertificatePost=true">邮寄证书</el-button>
+
+	<!-- 查看证书 -->
+	<dialog-certificate-check :v_certificate_info="vCertificateInfo"></dialog-certificate-check>
+	
+	<!-- 邮寄证书 -->
+	<dialog-certificate-post></dialog-certificate-post>
+</div>
+</body>
+
+<script type="text/javascript">
+new Vue({
+	el:'#dialog-test',
+	data(){return{
+		
+		isCertificateCheck:false,	//证书信息
+		isCertificatePost:true,		//邮寄证书
+		
+		// 【证书信息】=================================>dialog-certificate-check.vue
+		// 证书信息:
+		vCertificateInfo:{
+			company:'中通速递',
+			code:'2019010101',
+			fileList:[
+				{id:1,name:'入党申请书.docx',path:'http://download.12371.cn/fzdy/1.1.doc'},
+				{id:2,name:'入党申请书.docx',path:'http://download.12371.cn/fzdy/1.1.doc'},
+				{id:3,name:'入党申请书.docx',path:'http://download.12371.cn/fzdy/1.1.doc'},
+			]
+		},
+		
+	}},
+	mounted(){document.body.style.visibility="visible"},
+	components:{
+		'dialog-certificate-check':httpVueLoader('dialog-certificate-check.vue'),
+		'dialog-certificate-post':httpVueLoader('dialog-certificate-post.vue'),
+	},
+})
+</script>
+
+</html>

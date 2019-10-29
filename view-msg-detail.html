@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>学员|项目 通知详情</title>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="libs/vue.js"></script>
+	<script src="libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<!--
+	学员审核通知
+	项目最新通知
+	-->
+	<!-- 这个页面不需要引入base.css文件 -->
+	<!-- 所有需要标题的页面,都需要引入 -->
+	<link rel="stylesheet" type="text/css" href="libs/base-vtitle/base-vtitle.css"/>
+	<script src="libs/base-vtitle/base-vtitle.js"></script>
+	<style type="text/css">
+		/* base */
+		*{padding: 0;margin: 0;}
+		.container{box-sizing: border-box;padding: 20px;}
+		.container-view{box-sizing: border-box;background: #fff;padding: 20px;padding-bottom:70px;}
+		/* view */
+	</style>
+</head>
+<body>
+<div id="container" class="container">
+	<el-button icon="el-icon-arrow-left" style="margin-bottom: 16px;" @click="handleBackTo">返回</el-button>
+	<div class="container-view">
+		<!-- 标题导航栏 -->
+		<ul class="xtitle">
+			<li>{{title}}</li>
+		</ul>
+		
+		<!-- 容器块 -->
+		<!-- HTML DOM -->
+		<el-row>
+			<h2 style="text-align: center; margin-top: 47px;">{{article.title}}</h2>
+			<div style="text-align: center;margin-top:25px;margin-bottom:50px; color: #333;">
+				<span style="margin-right: 16px;">{{article.datetime}}</span>
+				<span>{{article.type}}</span>
+			</div>
+			
+			<!-- HTML内容 -->
+			<el-row style="padding: 0 84px; box-sizing: border-box; line-height: 42px;" v-html="article.text">				
+			</el-row>
+		</el-row>
+	</div>
+</div>
+
+<script type="text/javascript">
+new Vue({
+	el:'#container',
+	data(){return{
+		title:"通知详情",
+		article:{
+			title:'关于初级管理会计师报名缴费方式的说明',
+			type:'初级管理会计师',
+			datetime:'2019-09-07 15:06',
+			text:'<p style="text-indent: 2em; margin-bottom: 15px;">人民网武汉10月19日电 （周雯肖璐欣）19日12时左右，第七届世界军人运动会中国首金诞生！中国队射击男子25米手枪军事速射团体项目中，由谢振翔、金泳德和姚兆楠组成的中国队以1747环的成绩夺得本届军运会首金。</p><p style="text-indent: 2em; margin-bottom: 15px;">本届军运会的男子25米手枪军事速射团体项目共分3组进行，每名选手共射出60发子弹。中国队共派出谢振翔、金泳德、姚兆楠和高铮4名选手参赛。比赛中，谢振翔、金泳德和姚兆楠分别射出585环、583环和579环，最终中国队以1747环夺冠。俄罗斯、朝鲜队分获二、三名。</p><!--/enpcontent--><!--enpproperty <articleid>40927278</articleid><date>2019-10-19 15:27:26:0</date><author>周雯肖璐欣</author><title>中国斩获军运会首金 男子25米手枪军事速射团体冠军</title><keyword>中国斩获军运会首金</keyword><subtitle></subtitle><introtitle></introtitle><siteid>756</siteid><nodeid>1006445</nodeid><nodename>教体</nodename><nodesearchname>教体</nodesearchname><picurl></picurl><picbig></picbig><picmiddle></picmiddle><picsmall></picsmall><url>http://henan.china.com.cn/edu/2019-10/19/content_40927278.htm</url><urlpad>null</urlpad><liability>徐孟睿</liability><sourcename>人民网</sourcename><abstract>19日12时左右，第七届世界军人运动会中国首金诞生！中国队射击男子25米手枪军事速射团体项目中，由谢振翔、金泳德和姚兆楠组成的中国队以1747环的成绩夺得本届军运会首金。</abstract><channel>1</channel>/enpproperty--><p style="text-align:right; font-size:16px; color:#999;"><span id="editor_baidu">责任编辑：徐孟睿</span></p></div>',
+		}
+	}},
+	methods:{
+		handleBackTo(){
+			window.history.go(-1);
+		}
+	},
+	mounted(){document.body.style.visibility="visible";}
+});
+</script>
+</body>
+</html>

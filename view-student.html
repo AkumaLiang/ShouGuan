@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="css/viewStudent.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="libs/vue.js"></script>
+	<script src="libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+
+<div id="view-student">
+
+	<!-- l1:标题栏 -->
+	<el-row class="vtitle" id="vc-l1">
+		<!-- 标题 -->
+		<el-col :span="6" class="vtitle-val" id="vc-l1-title">{{vtitle}}</el-col>
+		<!-- 按钮 -->
+		<el-col :span="18">
+			<el-button type="primary" plain>导入学员</el-button>
+			<el-button @click="comTrigger" type="primary" plain>新增学员</el-button>
+		</el-col>
+	</el-row>
+	
+	<!-- l2:统计栏 -->
+	<el-row v-if="false" id="vc-l2">
+		<el-col :span="12" class="vc-l2">
+			<div class="vc-l2-title">学员统计</div>
+			<el-row class="vc-l2-content" type="flex" justify="space-around">
+				<el-col :span="8">已报名需要:100</el-col>
+				<el-col :span="8">考试通过学员：100</el-col>
+				<el-col :span="8">待报名学员：100</el-col>
+			</el-row>
+		</el-col>
+		
+		<el-col :span="12" class="vc-l2">
+			<div class="vc-l2-title">报名统计</div>
+			<el-row class="vc-l2-content" type="flex" justify="space-around">
+				<el-col :span="8">已报名需要:100</el-col>
+				<el-col :span="8">考试通过学员：100</el-col>
+				<el-col :span="8">待报名学员：100</el-col>
+			</el-row>
+		</el-col>
+	</el-row>
+	
+	<!-- l3:表单与表格 -->
+	<div class="vlist" id="vc-l3">
+		<!-- 表单 -->
+		<!--  :rules="rules" -->
+		<el-form :inline="true"> 
+		<!-- <el-row> -->
+			<!-- <el-col :span="6"> -->
+				<el-form-item prop="name">
+					<!-- 可以设置实时搜索 -->
+					<el-input placeholder="输入学员姓名回车搜索" v-model="form_vs.name" @keyup.enter.native="handleNameSearch"  suffix-icon="el-icon-search">
+					</el-input>
+				</el-form-item>
+			<!-- </el-col> -->
+				
+			<!-- <el-col :span="6"> -->
+				
+				<el-form-item label="所属部门：">
+					<el-select v-model="form_vs.department" @change="handleDepartmentChange">
+						<el-option v-for="item in opt_department" :key="item.value" :label="item.label" :value="item.value"></el-option>
+					</el-select>
+				</el-form-item>
+			<!-- </el-col> -->
+			
+			<!-- <el-col :span="6"> -->
+				
+				<el-form-item label="项目：">
+					<el-select v-model="form_vs.project" @change="handleProjectChange">
+						<el-option v-for="item in opt_project" :key="item.value" :label="item.label" :value="item.value"></el-option>
+					</el-select>
+				</el-form-item>
+			<!-- </el-col> -->
+			
+			<!-- <el-col :span="6"> -->
+				
+				<el-form-item label="性别：">
+					<el-select v-model="form_vs.gender" @change="handleGenderChange">
+						<el-option v-for="item in op_gender" :key="item.value" :label="item.label" :value="item.value"></el-option>
+					</el-select>
+				</el-form-item>
+			<!-- </el-col> -->
+		</el-form>
+		<!-- </el-row> -->
+
+		<!-- 表格 -->
+		<div class="vlist-table" id="vc-l3-table">
+			<!-- 表格内容 -->
+			<el-table :data="vlist"  @selection-change="handleSelectionChange">
+				<!-- Value -->
+				<el-table-column type="selection" width="55"></el-table-column>
+				<!-- v-if="false" 不显示-->
+				<el-table-column v-if="false" prop="date" label="admin"></el-table-column>
+				<el-table-column prop="department" label="所属部门"></el-table-column>
+				<el-table-column prop="name" label="姓名"></el-table-column>
+				<el-table-column prop="gender" label="性别"></el-table-column>
+				<el-table-column prop="pro" label="项目"></el-table-column>
+				<el-table-column prop="tel" label="电话"></el-table-column>
+				<!-- Fun -->
+				<el-table-column label="操作">
+					
+					<!-- 学员审核 -->
+					<div v-if="q==1">
+						<el-button type="text" size="small" @click="opera(1)">审核</el-button>
+						<el-button type="text" size="small" @click="opera(2)">审核记录</el-button>
+					</div>
+
+					<div v-else-if="q==2">
+						<el-button type="text" size="small" @click="opera(2)">审核记录</el-button>
+					</div>
+
+					<div v-else-if="q==3">
+						<el-button type="text" size="small" @click="opera(3)">学员详情</el-button>
+						<el-button type="text" size="small" @click="opera(2)">审核记录</el-button>
+					</div>
+
+					<!-- 学员管理 -->
+					<div v-else-if="q==11">
+						<el-button type="text" size="small" @click="opera(3)">学员详情</el-button>
+						<el-button type="text" size="small" @click="opera(4)">状态详情</el-button>
+						<el-button type="text" size="small" @click="opera(5)">开通网课</el-button>
+					</div>
+
+					<div v-else-if="q==22">
+						<el-button type="text" size="small" @click="opera(3)">学员详情</el-button>
+						<el-button type="text" size="small" @click="opera(4)">状态详情</el-button>
+						<el-button v-if="q2==1" type="text" size="small" @click="opera(6)">安排面授</el-button>
+						<el-button v-else type="text" size="small" @click="opera(7)">面授信息</el-button>
+					</div>
+
+					<div v-else-if="q==33">
+						<el-button type="text" size="small" @click="opera(3)">学员详情</el-button>
+						<el-button type="text" size="small" @click="opera(8)">安排考试</el-button>
+						<el-button type="text" size="small" @click="opera(4)">状态详情</el-button>
+					</div>
+
+					<div v-else-if="q==44">
+						<el-button type="text" size="small" @click="opera(3)">学员详情</el-button>
+						<el-button type="text" size="small" @click="opera(9)">考试信息</el-button>
+						<el-button type="text" size="small" @click="opera(4)">状态详情</el-button>
+					</div>
+
+					<div v-else-if="q==55">
+						<!-- 反馈 -->
+						
+							<el-row>
+								<el-button type="text" size="small" @click="opera(3)">学员详情</el-button>
+								<el-button type="text" size="small" @click="opera(4)">状态详情</el-button>
+								<!-- 已通过的证书是否邮寄 -->
+																								<!-- 邮寄 -->
+								<el-button v-if="q2==2" type="text" size="small" @click="opera(4)">证书详情</el-button>
+							</el-row>
+
+							<el-row v-if="q2==1">
+								<el-button type="text" size="small" @click="opera(0,1)">通过</el-button>
+								<el-button type="text" size="small" @click="opera(0,2)">未通过</el-button>
+								<el-button type="text" size="small" @click="opera(0,3)">补考</el-button>
+							</el-row>
+
+						
+					</div>
+
+				</el-table-column>
+			</el-table>
+			<!-- 分页数据 -->
+			<!-- 需要v-if以下length的判断,如果没有数据就不显示了 -->
+			<!-- Style From Base.css -->
+			<div class="vlist-table-page" id="vc-l3-table-page">
+				<div class="vtable-btn">
+					<el-button @click="handleClick" size="medium" plain>批量操作</el-button>
+				</div>
+				<el-pagination
+					:size="page.size"
+					:total="page.total"
+					layout="total,prev, pager, next"
+					@current-change="handlePageIndexChange"
+				background></el-pagination>
+			</div>
+		</div>
+	</div>
+	
+	<new-student v-show="isNewStuPanel"></new-student>
+</div>
+
+
+<script type="text/javascript">
+
+new Vue({
+	el:'#view-student',
+	data(){return{
+		
+		isNewStuPanel:false,
+		//页面数据:测试数据
+		vtitle:'待审核',	     	//标题;
+		q:1,					//执行类型;可以删除
+		q2:1,					//从1开始的...可以删除
+		//分页数据
+		page:{
+			total:200,			//页码总数;
+			size:10,			//每页显示条数;
+		},
+		//判断数据
+		// isNewStu:false,			// 是否显示新增
+		// isCostRecords:false,	//是否显示 添加成本记录
+		// isNewOrgMember:false,		//isShow 新增员工
+		
+		//选项数据;
+		opt_department:[				// 部门;测试数据
+			{value: '-1',label: '技术部'},
+			{value: '-2',label: '设计部'},
+		],
+		opt_project:[			// 项目;测试数据
+			{value: 11,label: '原子核'},
+			{value: 22,label: '环境净化'},
+			{value: 33,label: '天空技术'},
+		],
+		op_gender:[				// 性别;测试数据
+			{value:1,label:'男'},
+			{value:0,label:'女'}
+		],
+		
+		//数据列表
+		vlist:[
+			// 测试数据
+			{
+				// 这里的字段对应el-table-column的属性prop;
+				department:"技术部",
+				name:"蒂格尔",
+				gender:"男",//这里需要判断赋值,如果使用1/0表示男女的话;
+				pro:"核平世界",
+				tel:"17100001231",
+			},
+			{
+				// 这里的字段对应el-table-column的属性prop;
+				department:"设计部",
+				name:"伊萨贝尔",
+				gender:"女",//这里需要判断赋值,如果使用1/0表示男女的话;
+				pro:"核平世界",
+				tel:"17100001231",
+			},
+		],
+		
+		//表单数据(查询)
+		form_vs:{
+			//名字(学员):
+			name:'',
+			//部门
+			department:'',
+			//项目
+			project:'',
+			//性别
+			gender:'',
+		},
+	}},
+	methods:{
+		//是否显示编辑新增组件
+		comTrigger(){
+			this.isNewStuPanel = true;
+		},
+		//当分页的页码发生变化
+		handlePageIndexChange(idx){
+			
+			console.log('将打开第 '+idx+'页的数据;');
+			
+			//更新:请求数据;
+			//vlist;		数据列表
+			//page.total;	
+			//page.size;	
+		},
+		//用户点击回车后搜索;
+		handleNameSearch(){
+			console.log("搜索名字: "+this.form.name);
+		},
+		//选择部门发生变化
+		handleDepartmentChange(v){
+			console.log('改变的值department: '+v);
+			this.form.department = v;
+		},
+		//选择项目发生变化
+		handleProjectChange(v){
+			console.log('改变的值project: '+v);
+			this.form.project = v;
+		},
+		//性别发生变化
+		handleGenderChange(v){
+			console.log('改变的值gender: '+v);
+			this.form.gender = v;
+		},
+		//表格中的列表项,选中发生改变
+		handleSelectionChange(v){
+			//传递过来的是一个数组(包含目前所有选中的数据条),如果数组为空,表示取消选中;
+			//不为空,表示选中
+			console.log('操作的条: ');
+			console.log(v)
+		},
+		//批量操作的测试;
+		handleClick(){
+			//如果需要批量操作,需要将表格选中的值,用一个变量进行存储一下,在这里再进行获取;
+			window.alert('需要一个设置');
+		}
+
+	},
+	mounted(){document.body.style.visibility="visible";}// 处理数据加载延迟;
+	,components:{
+		'new-student':httpVueLoader('newStudent.vue')
+	}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>地图数据-TST</title>
+	<link rel="stylesheet" type="text/css" href="libs/base-vtitle/base-vtitle.css"/>
+	<style type="text/css">#mapchart{width:1131px;height:640px;margin:1.8rem auto}.container{border:solid 1px gainsboro;background:#fff;margin:2rem 1rem}</style>
+</head>
+<body>
+
+<div class="container">
+	<ul class="xtitle">
+		<li>代理信息统计</li>
+	</ul>
+	<button id="back" style="display: none;"></button>
+	<div id="mapchart"></div>
+</div>
+
+</body>
+
+<script src="libs/echarts/jquery-1.9.1.min.js"></script>
+<script src="libs/echarts/echarts-all-3.js"></script>
+<script src="libs/echarts/china.js"></script>
+<script src="libs/base-vtitle/base-vtitle.js"></script>
+
+<script src="js/city.js"></script>
+<script type="text/javascript">
+
+// 1. 加载省市的id信息到city.js;或不用引入city.js;
+// 直接将加载的省数据赋值给x1,市数据赋值给x2;
+
+// 2. 对应的省数据库(人数等信息),是list1;
+// 对应的市数据库(人数等西信息),是list2;
+
+
+//省数据库
+var list1 =
+[
+	//当前以[新疆][西藏] 为例;
+	
+	// 新疆
+	{
+		agencyRegionPro:65,		//省id
+		countNum:30,			//该省人数
+		numProp:16,				//人数占比
+		totalAmount:124101,		//返款总额
+	},
+	// 西藏
+	{
+		agencyRegionPro:54,		//省id
+		countNum:33,			//该省人数
+		numProp:14,				//人数占比
+		totalAmount:1641,		//返款总额
+	}
+];
+
+//市区数据库
+var list2 =
+[
+	//当前以西藏的[阿里地区][日喀则市]为例
+	//阿里地区
+	{
+		agencyRegionCity:5425,	//市区id
+		countNum:12,			//该省人数
+		numProp:14.25,			//人数占比
+		totalAmount:1521,		//返款总额
+	},
+	//日喀则市
+	{
+		agencyRegionCity:5423,	//市区id
+		countNum:14,			//该省人数
+		numProp:60.33,			//人数占比
+		totalAmount:1071,		//返款总额
+	}
+];
+</script>
+
+<script>
+	var der = [];	//诊断库
+    var myMap = echarts.init(document.getElementById('mapchart'));
+    var oBack = document.getElementById("back");
+    var provinces = ['shanghai', 'hebei', 'shanxi', 'neimenggu', 'liaoning', 'jilin', 'heilongjiang', 'jiangsu', 'zhejiang', 'anhui', 'fujian', 'jiangxi', 'shandong', 'henan', 'hubei', 'hunan', 'guangdong', 'guangxi', 'hainan', 'sichuan', 'guizhou', 'yunnan', 'xizang', 'shanxi1', 'gansu', 'qinghai', 'ningxia', 'xinjiang', 'beijing', 'tianjin', 'chongqing', 'xianggang', 'aomen'];
+    var provincesText = ['上海', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '北京', '天津', '重庆', '香港', '澳门'];
+	var jstr = '{"上海":["黄浦区","徐汇区","长宁区","静安区","普陀区","虹口区","杨浦区","闵行区","宝山区","嘉定区","浦东新区","金山区","松江区","青浦区","奉贤区"],"河北":["石家庄市","唐山市","秦皇岛市","邯郸市","邢台市","保定市","张家口市","常德市","沧州市","廊坊市","衡水市"],"山西":["太原市","大同市","阳泉市","长治市","晋城市","朔州市","晋中市","运城市","忻州市","临汾市","吕梁市"],"内蒙古":["呼和浩特市","包头市","乌海市","赤峰市","通辽市","鄂尔多斯市","呼伦贝尔市","巴彦淖尔市","乌兰察布市","兴安盟","锡林郭勒盟","阿拉善盟"],"辽宁":["沈阳市","大连市","鞍山市","抚顺市","本溪市","丹东市","锦州市","营口市","阜新市","辽阳市","盘锦市","铁岭市","朝阳市","葫芦岛市"],"吉林":["长春市","吉林市","四平市","辽源市","通化市","白山市","松原市","白城市","延边朝鲜族自治州"],"黑龙江":["哈尔滨市","齐齐哈尔市","鸡西市","鹤岗市","双鸭山市","大庆市","伊春市","佳木斯市","七台河市","牡丹江市","黑河市","绥化市","大兴安岭市"],"江苏":["南京市","无锡市","徐州市","常州市","苏州市","南通市","连云港市","淮安市","盐城市","扬州市","镇江市","泰州市","宿迁市"],"浙江":["杭州市","宁波市","温州市","嘉兴市","湖州市","绍兴市","金华市","衢州市","舟山市","台州市","丽水市"],"安徽":["合肥市","芜湖市","蚌埠市","淮南市","马鞍山市","淮北市","铜陵市","安庆市","黄山市","滁州市","阜阳市","宿州市","六安市","亳州市","池州市","宣城市"],"福建":["福州市","厦门市","莆田市","三明市","泉州市","漳州市","南平市","龙岩市","宁德市"],"江西":["南昌市","景德镇市","萍乡市","九江市","新余市","鹰潭市","赣州市","吉安市","宜春市","抚州市","上饶市"],"山东":["济南市","青岛市","淄博市","枣庄市","东营市","烟台市","潍坊市","济宁市","泰安市","威海市","日照市","莱芜市","临沂市","德州市","聊城市","滨州市","菏泽市"],"河南":["郑州市","开封市","洛阳市","平顶山市","安阳市","鹤壁市","新乡市","焦作市","濮阳市","许昌市","漯河市","三门峡市","南阳市","商丘市","信阳市","周口市","驻马店市","济源市"],"湖北":["武汉市","黄石市","十堰市","宜昌市","襄阳市","鄂州市","荆门市","孝感市","荆州市","咸宁市","随州市","仙桃市","潜江市","天门市","黄冈市","神农架林区","恩施土家族苗族自治州"],"湖南":["长沙市","株洲市","湘潭市","衡阳市","邵阳市","岳阳市","常德市","张家界市","益阳市","郴州市","永州市","怀化市","娄底市","湘西土家族苗族自治州"],"广东":["广州市","韶关市","深圳市","珠海市","汕头市","佛山市","江门市","湛江市","茂名市","肇庆市","惠州市","梅州市","汕尾市","河源市","阳江市","清远市","东莞市"],"广西":["南宁市","柳州市","桂林市","梧州市","北海市","防城港市","钦州市","贵港市","玉林市","百色市","贺州市","河池市","来宾市","崇左市"],"海南":["海口市","三亚市","三沙市","儋州市","五指山市","琼海市","文昌市","万宁市","东方市","安定县","屯昌县","澄迈县","临高县","白沙黎族自治县","昌江黎族自治县","乐东黎族自治县","陵水黎族自治县","保亭黎族苗族自治县","琼中黎族苗族自治县"],"四川":["成都市","自贡市","攀枝花市","泸州市","德阳市","绵阳市","广元市","遂宁市","内江市","乐山市","南充市","眉山市","宜宾市","广安市","达州市","巴中市","资阳市","阿坝藏族羌族自治州","甘孜藏族自治州","凉山彝族自治州","雅安市"],"贵州":["贵阳市","六盘水市","遵义市","安顺市","毕节市","铜仁市","黔西南布依族苗族自治州","黔东南苗族侗族自治州","黔南布依族苗族自治州"],"云南":["昆明市","曲靖市","玉溪市","保山市","昭通市","丽江市","普洱市","临沧市","楚雄彝族自治州","红河哈尼族彝族自治州","文山壮族苗族自治州","大理白族自治州","德宏傣族景颇族自治州","怒江傈僳族自治州","迪庆藏族自治州","西双版纳傣族自治州"],"西藏":["拉萨市","日喀则市","昌都市","山南市","那曲地区","阿里地区","林芝市","山南市"],"陕西":["西安市","铜川市","宝鸡市","咸阳市","渭南市","延安市","汉中市","榆林市","安康市","商洛市"],"甘肃":["兰州市","嘉峪关市","金昌市","白银市","天水市","武威市","平凉市","酒泉市","庆阳市","定西市","陇南市","临夏回族自治州","甘南藏族自治州"],"青海":["西宁市","海东市","海北藏族自治州","黄南藏族自治州","海南藏族自治州","果洛藏族自治州","玉树藏族自治州","海西蒙古族藏族自治州"],"宁夏":["银川市","石嘴山市","吴忠市","固原市","中卫市"],"新疆":["乌鲁木齐市","克拉玛依市","吐鲁番市","昌吉回族自治州","博尔塔拉蒙古自治州","巴音郭楞蒙古自治州","阿克苏地区","克孜勒苏柯尔克孜自治州","喀什地区","和田地区","伊犁哈萨克自治州","塔城地区","阿勒泰地区","石河子市","阿拉尔市","图木舒克市","五家渠市","北屯市","铁门关市","双河市","可克达拉市","昆玉市","哈密市"],"北京":["东城区","西城区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云区","延庆区"],"天津":["和平区","河东区","河西区","南开区","河北区","红桥区","东丽区","西青区","津南区","北辰区","武清区","宝坻区","滨海新区","宁河区","静海区","蓟州区"],"重庆":["万州区","涪陵区","渝中区","大渡口区","江北区","沙坪坝区","九龙坡区","南岸区","北碚区","綦江区","大足区","渝北区","巴南区","黔江区","长寿区","江津区","合川区","永川区","南川区","璧山区","铜梁区","潼南区","荣昌区","梁平县","城口县","丰都县","垫江县","武隆县","忠县","云阳县","奉节县","巫山县","巫溪县","石柱土家族自治县","秀山土家族苗族自治县","酉阳土家族苗族自治县","彭水苗族土家族自治县","开州区"],"香港":["中西区","湾仔区","东区","南区","油尖旺区","深水埗区","九龙城区","观塘区","荃湾区","屯门区","元朗区","北区","大埔区","西贡区","沙田区","葵青区","离岛区","黄大仙区"],"澳门":["花地玛堂区","花王堂区","望德堂区","大堂区","风顺堂区","嘉模堂区","路凼填海区","圣方济各堂区"]}';
+	var jData = JSON.parse(jstr);
+	var seriesData = [];
+	for(let i=0;i<provincesText.length;i++){
+		seriesData.push({
+			name: provincesText[i],value: i*100
+		})
+	}
+    oBack.onclick = function () {initEcharts("china", "中国");};
+    initEcharts("china", "中国");
+    function initEcharts(pName, Chinese_) {
+		//var tmpSeriesData = pName === "china" ? seriesData : [];
+		let tmpSeriesData=[];	
+		if(jData[pName]!=undefined){
+			for(let i=0;i<jData[pName].length;i++){
+				tmpSeriesData.push({
+					name:jData[pName][i],
+					value:i*200
+				})
+			}
+		}else if(pName=='china'){tmpSeriesData = seriesData;
+		}else{tmpSeriesData = [];}
+
+	console.log(x1);
+	var countNum=22;			//区域人数;
+	var numProp = 14.33;		//人数占比;
+	var totalAmount = 1641;		//返款总额;
+	var isSetData = false;		//编号判断
+	var option = {
+		title: {text: Chinese_ || pName,left: 'center'},
+		tooltip: {
+			trigger: 'item',
+			formatter:function(params) {
+				
+				//地区异常的诊断工作;
+				if(typeof(x1[params.data.name])=='undefined' && typeof(x2[params.data.name])=='undefined'){
+					 // onsole.warn('诊断二级地区异常: ',params.data.name,x2[params.data.name]);
+					if(der.indexOf(params.data.name) == -1){
+						console.log('没有找到: '+params.data.name)
+						der.push(params.data.name);
+					}
+				}
+				isSetData = false;//重置
+				
+				//如果是二级市区的数据
+				if(typeof(x2[params.data.name])!='undefined'){
+					for(let i=0;i<list2.length;i++){
+						if(list2[i].agencyRegionCity == x2[params.data.name].id){
+							countNum=list2[i].countNum || '--';				//区域人数;
+							numProp = list2[i].numProp+'%' || '--';				//人数占比;
+							totalAmount = '￥'+list2[i].totalAmount || '--';		//返款总额;
+							isSetData = true;
+							break;
+							
+						}
+					}
+				//如果是一级省市的数据
+				}else if(typeof(x1[params.data.name])!='undefined'){
+					for(let i=0;i<list1.length;i++){
+						if(list1[i].agencyRegionPro == x1[params.data.name].id){
+							countNum=list1[i].countNum || '--';
+							numProp = list1[i].numProp+'%' || '--';
+							totalAmount = '￥'+list1[i].totalAmount || '--';
+							isSetData = true;
+							break;
+						}
+					}
+				}
+				
+				//如果对应Id失败;
+				if(!isSetData){ countNum = '--';numProp = '--';totalAmount = '--';}
+				//数据渲染
+				var html = `<div style="color:white;text-align:center"><span>代理人人数：`+countNum+`</span><br/><span>人数占比：`+numProp+`</span><br/><span>招生返款总额：`+totalAmount+`</span><br/></div>`;
+				// setTimeout(function() {
+				// 	tooltipCharts(params.name);
+				// }, 10);
+				return html;
+			}
+		},
+		visualMap:{
+			min: 0,
+			max: 2500,
+			left: 'left',
+			top: 'bottom',
+			text:['高','低'],
+			calculable : true
+		},
+		series:[{
+            name: Chinese_ || pName,
+            type: 'map',
+			mapType: pName,
+			roam: false,
+			data: tmpSeriesData,
+			zoom:1.24,
+			label: {
+				normal: {formatter: '{b}',position: 'right',show: true,},
+				emphasis: {show: true,}
+			}
+		}]
+	};
+	myMap.setOption(option);
+	myMap.off("click");
+		if (pName === "china") { // 全国时，添加click 进入省级
+    	  myMap.on('click', function (param) {
+			  
+		  //遍历文件;
+          // 遍历取到provincesText 中的下标  去拿到对应的省js
+          for (var i = 0; i < provincesText.length; i++) {
+            if (param.name === provincesText[i]) {
+              //显示对应省份的方法
+              showProvince(provinces[i], provincesText[i]);
+              break;
+            }
+          }
+            if (param.componentType === 'series') {
+                var provinceName =param.name;
+                $('#box').css('display','block');
+                $("#box-title").html(provinceName);
+            }  
+        });
+      } else { 
+    	  myMap.on("click", function (param) {
+    		  console.info(param.name);
+	      });
+    	  // 省份，添加双击 回退到全国
+    	  myMap.on("dblclick", function () {
+	          initEcharts("china", "中国");
+	      });
+      }
+    }
+    // 展示对应的省
+    function showProvince(pName, Chinese_) {
+      //这写省份的js都是通过在线构建工具生成的，保存在本地，需要时加载使用即可，最好不要一开始全部直接引入。
+      loadBdScript('$' + pName + 'JS', 'libs/echarts/map/' + pName + '.js', function () {
+        initEcharts(Chinese_);
+      });
+    }
+    // 加载对应的JS
+    function loadBdScript(scriptId, url, callback) {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      if (script.readyState) {  //IE
+        script.onreadystatechange = function () {
+          if (script.readyState === "loaded" || script.readyState === "complete") {
+            script.onreadystatechange = null;
+            callback();
+          }
+        };
+      } else {  // Others
+        script.onload = function () {
+          callback();
+        };
+      }
+      script.src = url;
+      script.id = scriptId;
+	  console.log(script);
+      document.getElementsByTagName("head")[0].appendChild(script);
+    };
+
+	</script>
+</html>

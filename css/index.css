@@ -1,0 +1,39 @@
+/* @charset "utf-8"; */
+#view{overflow: hidden;}
+/* Aside 侧边栏的样式 ******************/
+#aside{background-color:#2d3037;color:#fff}
+/* 导航的标题样式 */
+#mItemTarget div{font-weight:bold}
+#mItemTarget div:hover{cursor:default}
+/*标题和列表的宽高设置*/
+#mItemTarget div,li{height: 60px;line-height: 60px;}
+#header li{text-align: center;}
+#header li img{height:30px;width:30px;display:inline-block;vertical-align:middle;margin-right:10px}
+#mItemTarget div,#mItemTarget li{box-sizing:border-box;padding-left:24%;display:block;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;line-height:-17px;vertical-align:middle;height:60px;line-height:60px;padding-left:35%}
+ /* 导航列表的样式 */
+#mItemTarget li:hover{background-color: #363f4b;cursor: pointer;}
+/* Header 头部的样式 ****************/
+#header{height: auto!important; /*奇怪的地方出现了 height:60px*/padding: 0; margin: 0;}
+#header :not(i){display: inline-block;}
+/* Logo 的图片放置 */
+#logo{display: inline-block;width:220px;height:62px;margin: 10px 30px;	/* 关联点 */}
+/* 菜单按钮列表 */
+#header ul{vertical-align: top;line-height: 82px;margin-left: 52px;;}
+#header li{margin-right: 56px;cursor: pointer;}
+/* #header右边功能块 */
+#baseRigth{float: right;}
+/* 右边的头像样式,与上面的#Logo样式有些关联,都在#header块里面 */
+#baseRigth img{height: 60px;width: 60px;vertical-align: middle;margin: 10px 0;/* 关联点 */}
+#baseRigth span{vertical-align: middle;;}
+/* 右边功能块 - 按钮的样式 和 名字显示的样式 */
+.def-btn,.who{margin: 0 24px;}
+button{width:30px;height:30px;outline:0}
+button:hover{cursor:pointer}
+button:first-child{background-image:url(../img/消息1@2x.png);background-size:contain}
+button:nth-child(2){background-image:url(../img/首页@2x.png);background-size:contain}
+button:last-child{background-image:url(../img/退出@2x.png);background-size:contain}
+/* #content的样式 ****************/
+#content{background-color:#f5f6f9;overflow:visible}
+#aside{font-size:18px}
+#aside li,#mItemTarget div{position:relative}
+#aside img{position:absolute;left:22%;top:24%;height:30px;width:30px;display:inline-block;vertical-align:middle}

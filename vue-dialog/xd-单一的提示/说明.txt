@@ -1,0 +1,21 @@
+
+
+导出学员
+参数:学员Array[]
+dg-export.vue
+
+
+邮寄信息:(显示/表单)
+参数:单号/公司/是否只读
+注:`快递公司`列表,页面只加载一次,放在`mailFirmList`就可以;
+dg-mail.vue
+
+
+
+驳回:(表单)
+dg-reject.vue 
+
+
+响应对话框:
+使用elemnetUI MessageBox;
+https://element.eleme.cn/2.0/#/zh-CN/component/message-box

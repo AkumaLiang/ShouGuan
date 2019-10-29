@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>表单测试页面-Test_FormPage</title>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/viewStudent.css"/>
+	<link rel="stylesheet" type="text/css" href="../libs/quill/quill.snow.css">
+	<script src="../libs/vue.js"></script>
+	<script src="../libs/httpVueLoader.js"></script>
+	<script src="../libs/quill/katex.min.js"></script>
+	<script src="../libs/quill/highlight.min.js"></script>
+	<script src="../libs/quill/quill.min.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	
+</head>
+
+<body>
+
+<div id="xt">
+	<h2 style="margin-bottom: 10px;">表单测试页面</h2>
+	<el-button @click="isSubPanel=true">打开弹出框</el-button>
+	
+	<!-- 新增部门-->
+	<add-department></add-department>
+	<!-- 新增员工 -->
+	<!-- <add-member></add-member> -->
+	<!-- 添加公告 建议使用v-if -->
+	<!-- <add-notice></add-notice> -->
+	
+</div>
+
+<script>
+new Vue({
+	el:'#xt',
+	data(){return{
+		isSubPanel:false,
+		isNewStuPanel:true,
+	}},mounted(){document.body.style.visibility="visible"},
+	components:{
+		
+		// 新增部门
+		'add-department':httpVueLoader('add-department.vue'),
+		// 新增员工
+		'add-member':httpVueLoader('add-member.vue'),
+		// 添加公告
+		'add-notice':httpVueLoader('add-notice.vue'),
+	}
+});
+</script>
+</body>
+</html>

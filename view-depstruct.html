@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<link rel="stylesheet" type="text/css" href="css/viewStudent.css"/>
+	<script src="libs/vue.js"></script>
+	<script src="libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<style type="text/css">*{font-family:"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif}body{background:#fff}#vo-d-table{box-sizing:border-box;padding:10px 20px}#vo-d-table th{text-align:center}#kftd{box-sizing:border-box;padding:26px;border:solid 1px gainsboro;width:310px;min-height:600px;margin:0 auto;font-size:18px}.el-tree-node__label{font-size:16px}.el-tree-node{line-height:36px}</style>
+	<title>部门管理</title>
+	<!-- 部门结构.html -->
+	<!-- 注:这个页面仅仅是这个树形结构有效 -->
+</head>
+<body>
+<div id="view-depstruct">
+<el-row>
+	
+    <el-col :span="6" id="dep-tree">
+		<div id="kftd">
+			<el-tree :data="vlist" ref="tree" highlight-current node-key="id" :default-expand-all="true" @node-click="handleNodeClick"></el-tree>
+		</div>
+    </el-col>
+
+    <!-- 表格菜单 -->
+    <el-col :span="18">
+        <div id="vo-d-table">
+            <el-button icon="el-icon-plus" style="margin-bottom:14px;" type="primary" size="medium">新增部门</el-button>
+            <el-table :data="vlist" style="width: 100%">
+                <el-table-column prop="0" label="部门名称"></el-table-column>
+                <el-table-column prop="0" label="成员数量"></el-table-column>
+                <el-table-column prop="0" label="部门经理"></el-table-column>
+                <el-table-column prop="0" label="部门描述"></el-table-column>
+                <el-table-column prop="0" label="操作">
+                    <button type="button" class="tbtn">编辑</button>
+                    <button type="button" class="tbtn">删除</button>
+                </el-table-column>
+            </el-table>
+        </div>
+
+    </el-col>
+</el-row>
+</div>	
+</body>
+</html>
+
+
+<script>
+new Vue({
+	el:'#view-depstruct',
+    data(){return{
+		//
+        vlist:[
+			{
+			id:0, 	//MainKey:主键,整个树唯一的键;
+			bid:0,	//部门id
+			label:'首冠教务',
+			children:[
+				{
+					id:1,
+					label:'技术部',
+					children:[
+					{
+						id:11,
+						bid:1,
+						label:'C++',
+					},
+					{
+						id:12,
+						bid:2,
+						label:'Java',
+						
+					}]
+				},
+				{
+					id:2,
+					bid:3,
+					label:'行政部'
+				},
+				{
+					id:3,
+					bid:4,
+					label:'运营部',
+					children:[
+					{
+						id:31,
+						bid:5,
+						label:'PHP',
+					}],
+				}],
+			},
+		],
+
+    }},
+    methods:{
+		// 节点点击事件
+		handleNodeClick(x,y,z){
+			// console.log(x,y,z);
+			console.log('bid: '+x.bid);
+		},
+	},
+	// 显示界面
+	mounted(){document.body.style.visibility="visible";},
+});
+</script>

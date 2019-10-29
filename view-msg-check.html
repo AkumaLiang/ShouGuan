@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>学员|项目 审核通知</title>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="libs/vue.js"></script>
+	<script src="libs/httpVueLoader.js"></script>
+	<!-- 0. 学员审核通知 , 项目最新通知 -->
+	<!-- 1.所有需要标题的页面,都需要引入; 2.这个页面不需要引入base.css文件 -->
+	<link rel="stylesheet" type="text/css" href="libs/base-vtitle/base-vtitle.css"/>
+	<script src="libs/base-vtitle/base-vtitle.js"></script>
+	<style type="text/css">
+		/* base */
+		*{padding:0;margin:0}.container{box-sizing:border-box;padding:20px}.container-view{box-sizing:border-box;background:#fff;padding:20px;padding-bottom:70px}
+		/* view */
+		.msg-dt{float:right}.msg-list{height:36px;line-height:36px;margin-top:26px}.msg-list li{list-style:none;padding-left:16px;border-bottom:solid 1px gainsboro;padding:16px}.el-collapse-item__header{color:gray;font-weight:bold}.msg-content{padding-left:5px}.msg-content:hover{text-decoration:underline;cursor:pointer}.x-main{position:relative}.x-sub{position:absolute;top:14%;right:2%}.el-collapse-item__header{position:relative}.ix{position:absolute;right:2%}
+	</style>
+</head>
+<body>
+<div id="container" class="container">
+	
+	<div class="container-view">
+		<!-- 标题导航栏 -->
+		<ul class="xtitle">
+			<li>{{title}}</li>
+			<li>测试标题</li>
+			<li>测试标题</li>
+		</ul>
+		
+		<!-- 容器块 -->
+		<el-row>
+			<!-- 消息列表 -->
+			<!-- <ul class="msg-list">
+				<li v-for="item in msgList" :key="item.id" @click="goto(item.id)">
+					<span>{{item.msg}}</span>
+					<span class="msg-dt"></span>
+				</li>
+			</ul> -->
+			
+			
+			<!-- <div class="x-sub">{{item.dt}}</div> -->
+			<el-collapse v-model="activeNames" :accordion="true">
+			  <el-collapse-item class="x-main" v-for="(item,k) in msgList" :key="k" @click="goto(item.id)"   :name="k+1">
+				<template slot="title">
+				      学员审核通知<i class="ix" style="float: right;">{{item.dt}}</i>
+				    </template>
+			    <div class="msg-content" @click="goto(item.id)">{{item.msg}}</div>
+			  </el-collapse-item>
+			</el-collapse>
+			
+			
+		</el-row>
+	</div>
+</div>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script type="text/javascript">
+new Vue({
+	el:'#container',
+	data(){return{
+		activeNames:'',
+		title:"学员审核通知",
+		msgList:[
+			{id:1,msg:'您添加的学员王杰瑞审核已通过。',dt:'2019-08-07 17:10'},
+			{id:2,msg:'您添加的学员王杰瑞审核已通过。',dt:'2019-08-07 17:10'},
+			{id:3,msg:'您添加的学员王杰瑞审核已通过。',dt:'2019-08-07 17:10'},
+			{id:4,msg:'您添加的学员王杰瑞审核已通过。',dt:'2019-08-07 17:10'},
+			{id:5,msg:'您添加的学员王杰瑞审核已通过。',dt:'2019-08-07 17:10'},
+			{id:6,msg:'您添加的学员王杰瑞审核已通过。',dt:'2019-08-07 17:10'},
+		]
+	}},
+	mounted(){document.body.style.visibility="visible";},
+	methods:{
+		goto(id){
+			location.href="view-msg-detail.html?id="+id;
+		}
+	}
+});
+</script>
+</body>
+</html>

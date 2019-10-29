@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+.vc-l2-title{			/* vc-l2-title */
+	background-color: #EDF4FF;
+	height: 70px;
+	line-height: 70px;
+	font-size:20px;
+	font-weight: bold;
+	padding-left: 20px;
+}
+#vc-l2{
+	box-sizing: border-box;
+}
+.vc-l2:first-child{
+	border-right: solid 10px #f5f6f9;
+}
+.vc-l2:last-child{
+	border-left: solid 10px #f5f6f9;
+}
+.vc-l2-content{
+	font-size: 18px;
+	height: 70px;
+	line-height: 70px;
+	background: #fff;
+	text-align: center;
+}
+#vc-l2{
+	margin-bottom: 20px;
+}

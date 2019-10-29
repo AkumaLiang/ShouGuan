@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="css/home-project-detail.css"/>
+	
+	<script src="libs/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<!-- Home页面:项目详情 -->
+	<!-- 首页下面的项目详情 home-project-detail.html-->
+</head>
+<body>
+<div id="projectDetails">
+<!-- 标题栏 -->
+<div id="pd-title">
+    <div id="pd-title-val">{{vList.name}}</div>
+    <div>
+        <el-button type="primary" size="small" plain @click="handelNewStu">添加学员</el-button>
+        <el-button type="primary" size="small" plain @click="back">返回</el-button>
+    </div>
+</div>
+<!-- 内容块 -->
+<div id="pd-content">
+
+<!-- 最新通知列表 -->
+<div id="pd-c1">
+    <div class="pd-content-title">
+        <img src="img/x_newmsg.svg" alt="pic">最新通知
+        <span id="more-btn">更多&gt;&gt;</span>
+        <!-- <span style="clear:right"></span> -->
+    </div>
+    <ul>
+        <li class="home-project-detail-li" :key="k" v-for="(v,k) in vList.msg">
+           <span>{{v.name}}</span>
+           <span>{{v.date}}</span>
+            <!-- <span style="clear:right"></span> -->
+        </li>
+    </ul>
+</div>
+
+<!-- 项目介绍,加载图文 -->
+<div id="pd-c2">
+    <div class="pd-content-title">
+        <img src="img/x_project.svg" alt="pic">项目介绍
+    </div>
+    <div id="pd-intro-view">{{vList.intro}}</div>
+</div>
+
+<!-- 项目附件下载,列表-->
+<div id="pd-c3">
+    <div class="pd-content-title">
+        <img src="img/x_project.svg" alt="pic">附件下载
+    </div>
+    <ul>
+        <li :key="k" v-for="(v,k) in vList.files">
+        <img src="img/x_fj@item.png" alt="pic">
+        <span>{{v.name}}</span>
+        <img :href="v.url"  class="downf" src="img/x_download.svg" alt="down">
+        </li>
+    </ul>
+</div>
+
+</div>
+</div>
+
+<script>
+new Vue({
+	el:'#projectDetails',
+	data(){return{
+		//消息数据
+		vList:{
+			// 测试数据
+			name:'初级管理会计师',    //名字
+			intro:'这是项目介绍',   //介绍
+			msg:[
+				//名字和时间
+				{name:'2019年初级管理会计师全国统一考试 第三次考试公告',date:'2019-08-07'},
+				{name:'2019年初级管理会计师全国统一考试 第三次考试公告',date:'2019-08-07'},
+				{name:'2019年初级管理会计师全国统一考试 第三次考试公告',date:'2019-08-07'}
+			],
+			files:[
+				// 文件名字和下载地址;
+				{name:'2019年初级管理会计师全国统一考试 第三次考试公告.docx',url:'#'},
+				{name:'2019年初级管理会计师全国统一考试 第三次考试公告.docx',url:'#'},
+				{name:'2019年初级管理会计师全国统一考试 第三次考试公告.docx',url:'#'}
+			] //附件
+		}
+	}},
+	methods:{
+		//返回首页
+		back(){
+			location.href = 'home.html';
+		},
+		//添加学员
+		handelNewStu(){
+			window.alert('添加学员');
+		}
+	},mounted(){document.body.style.visibility="visible";}
+});
+</script>
+</body>
+</html>

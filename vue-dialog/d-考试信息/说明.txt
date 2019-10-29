@@ -1,0 +1,7 @@
+
+//考试信息:
+<dialog-testinfo
+	:v_test_info="vTestInfo"	//传递给组件的数据,类型:Object;
+	:read_only="isReadOnly"		//是否只读;(如需显示编辑,需要更改为false); this.isReadOnly = false;
+></dialog-testinfo>
+

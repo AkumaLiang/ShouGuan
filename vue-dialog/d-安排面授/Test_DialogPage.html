@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>表单测试页面</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/xdialog.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="../../libs/vue.js"></script>
+	<script src="../../libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="dialog-test">
+	
+	<el-button @click="isdialogTeachInfo=true">面授信息</el-button>
+	<el-button @click="testChange">面授2信息</el-button>
+	<el-button @click="isdialogFaceSeto=true">安排面试</el-button>
+	
+
+	<dialog-face-teachinfo :_v_face_teach_info="vFaceTeachInfo" :_v_test_info="vTestInfo" ></dialog-face-teachinfo>
+	<dialog-face-seto  :_v_face_teach_info="vFaceTeachInfo" :_v_test_info="vTestInfo"></dialog-face-seto>
+	
+</div>
+</body>
+
+<script type="text/javascript">
+new Vue({
+	el:'#dialog-test',
+	data(){return{
+		isdialogTeachInfo:true,	//面授信息
+		isdialogFaceSeto:false,	//安排面授
+
+		//【面授信息】=================================>dialog-face-teachinfo.vue
+		//面授安排v_list_day
+		vFaceTeachInfo:[{
+				day:'1',
+				faceDetailTime:'2019年9月2日 15:13',
+				faceDetailTeacher:'王杰瑞',
+				faceDetailSubject:'初级管理会计师',
+				faceDetailNum:'100',
+				classPlace:'河北师范大学公教楼A109',
+		},
+		{
+				day:'2',
+				faceDetailTime:'2019年9月2日 15:13',
+				faceDetailTeacher:'王杰瑞',
+				faceDetailSubject:'初级管理会计师',
+				faceDetailNum:'100',
+				classPlace:'河北师范大学公教楼A109',
+		}],
+		//考试数据v_test_info
+		vTestInfo:{
+			examTime:'2019年9月2日 15:13',
+			examPlace:'河北师范大学公教楼A109',
+		}
+	}},
+	methods:{
+		//打开之前的调用;
+		testChange(){
+			this.vTestInfo.examPlace="中国西北富";
+			this.isdialogTeachInfo=true;
+			this.vFaceTeachInfo[0].faceDetailTeacher="皮卡丘";
+		},
+	},
+	mounted(){document.body.style.visibility="visible"},
+	components:{
+		'dialog-face-teachinfo':httpVueLoader('dialog-face-teachinfo.vue'),
+		'dialog-face-seto':httpVueLoader('dialog-face-seto.vue'),
+	},
+})
+</script>
+
+</html>

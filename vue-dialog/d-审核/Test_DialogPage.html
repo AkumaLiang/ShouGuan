@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>表单测试页面</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/xdialog.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="../../libs/vue.js"></script>
+	<script src="../../libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="dialog-test">
+	<el-button @click="isStuCheck=true">学员审核</el-button>
+	<el-button @click="isStuCheck2=true">学员审核2</el-button>
+	
+	<!-- 无图 -->
+	<dialog-stu-check v-if="isStuCheck" :stuinfo="stuinfo"></dialog-stu-check>
+	<!-- 有图 -->
+	<dialog-stu-check2 v-if="isStuCheck2" :stuinfo="stuinfo"></dialog-stu-check2>
+
+</div>
+</body>
+
+<script type="text/javascript">
+new Vue({
+	el:'#dialog-test',
+	data(){return{
+		isStuCheck:false,
+		isStuCheck2:true,
+		stuinfo:{
+			nl:'未知的数据',
+			
+			// dialog-stu-check.vue的数据
+			stuCompanyName:'------',
+			stuEin:'------',
+			tisName:'------',
+			stuRemittanceDate:'------',
+			stuName:'------',
+			stuRemittanceAmount:'------',
+			stuSex:'------',
+			proName:'------',
+			stuRemittanceAccount:'------',
+			stuCard:'------',
+			stuAddress:'------',
+			otherInfo:'--------',			//其他
+			stuPhone:'------',
+			stuRemittanceDate:'------',
+			examLevel:'------',				//考试级别
+			takingsAccount:'------',		//进款账户
+			payment:'------',				//交款方式
+			order_number:'------',			//订单号
+			stu_remittance_peop:'------',	//付款人
+
+			
+			//check-stu-check2.vue新增的
+			
+			//其他信息
+			stuOtherInfo:'---------------------------------------------------------------------------',
+			stuRecord:'------',		//学历
+			stuWord:'------',		//职称
+			stuWorkUnit:'------',	//工作单位
+			stuPosition:'------',	//职务
+			stuYearNum:'------',	//工作年限
+			stuMailAddress:'------',//通讯地址
+			stuPhone:'------',//电话
+			stuEmail:'------',//邮箱
+			
+			
+			
+			// 图片信息
+			stuRecordPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			stuCertificatePic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			stuWordCertPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			stuCardPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			stuPhotoPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			stuProDeclarPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			
+			//其他信息的图片
+			stuOtherPic:[
+				"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+				"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+				"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			]
+		}
+	}},
+	mounted(){document.body.style.visibility="visible"},
+	methods:{
+		
+	},
+	components:{
+	'dialog-stu-check':httpVueLoader('dialog-stu-check.vue'),
+	'dialog-stu-check2':httpVueLoader('dialog-stu-check2.vue')
+	},
+})
+</script>
+
+</html>

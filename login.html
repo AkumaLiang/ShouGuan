@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="css/login.css"/>
+	<script src="libs/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<title>登录</title>
+</head>
+<body>
+
+<el-row id="login">
+	<!-- 封面图 -->
+	<el-col :span="16">
+		<div id="cover" class="grid-content bg-purple">
+			<img id="coverImg" src="./img/cover.png" alt="Cover">
+		</div>
+	</el-col>
+	
+	<!-- 登录表单 -->
+	<el-col :span="8">
+		<div class="grid-content bg-purple-light">
+		<div id="form">
+			<!-- Log -->
+			<img src="./img/logo.png" alt="log">
+			<!-- 登录 -->
+			<h2 id="form-title">登录</h2>
+			<el-form>
+				<el-input id="iuser" v-model="form.user" type="text" placeholder="请输入账号" clearable></el-input>
+				<el-input id="ipwd" v-model="form.pwd" type="password" placeholder="请输入密码" clearable></el-input>
+				<el-row>
+					<el-col :span="10" >
+						<img id="yzm" @click="updateYzm" :src="yzmUrl" alt="验证码" style="width: 91%;vertical-align: middle;height: 67px; margin-top: 10px; margin-left: 10px; background: #000;">
+					</el-col>
+					
+					<el-col :offset="2" :span="10">
+						<el-input type="text" v-model="form.yzm" placeholder="请输入验证码"></el-input>
+					</el-col>
+				</el-row>
+				<el-button type="primary" size="medium" value="登录" @click="login" >登录</el-button>
+			</el-form>
+		</div>
+		</div>
+	</el-col>
+</el-row>
+
+<script type="text/javascript">
+new Vue({
+	el:'#login',
+	//数据
+	data(){return{
+		//表单
+		form:{
+			user:'',		//user
+			pwd:'',			//pwd
+			yzm:'',			//yzm
+		},
+		//验证码的地址;
+		yzmUrl:'',			//验证码路径
+		
+	}},
+	//方法
+	methods:{
+		//登录
+		login(){
+			alert('login');
+			/*
+			let f = new FormData();
+			f.append('username',this.form.user);
+			f.append('password',this.form.pwd);
+			f.append('captcha',this.form.yzm);
+			window.location.herf = "www.baidu.com/"
+			*/
+		},
+		//更新验证码
+		updateYzm(){
+			alert('获取验证码!');
+			/*
+			let url = 'http://192.168.1.101:8080/sgEdu/captcha.jpg?t=';
+			let t = parseInt(new Date().getTime()/1000);	//获取时间戳
+			
+			axios.get(url+t,{ responseType: 'blob'}).then(r => {
+				let reader = new FileReader();
+				reader.onload = (e)=>{
+					this.yzmUrl =  e.target.result;
+				}
+				reader.readAsDataURL(r);
+			}).catch(e=>{
+				console.log(e);
+			})
+			*/
+		}
+	},
+	mounted(){
+		document.body.style.visibility="visible";
+		//自适应页面高度需要;
+		document.getElementById('coverImg').style.height= (window.innerHeight)+'px';
+		window.onresize = function(){
+			console.log('innerHeight: '+window.innerHeight);
+			document.getElementById('coverImg').style.height= (window.innerHeight)+'px';
+		}
+	},
+	//示例创建完成之后的,
+	created(){
+		//请求在线验证码
+		// this.updateYzm();
+	}
+})
+</script>
+
+</body>
+</html>

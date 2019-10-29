@@ -1,0 +1,11 @@
+/* 在Student组里面,如果存在表单,加入这个样式 */
+.new-stu-title{
+	border-left: solid 2px #1abc9c;
+	padding-left: 10px;
+	margin-bottom: 20px;
+}
+#new-stu-form {padding: 0 1rem;}
+#new-stu-l3-text{margin-bottom: 20px;}
+#new-stu-l3-imgs{margin-bottom: 20px;}
+#new-stu-l3-img-hint{margin-top: 10px;}
+#new-stu-l4{text-align: right;}

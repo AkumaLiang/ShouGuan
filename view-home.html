@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- 这是二级管理员的首页 -->
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>首页-二级管理员</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="css/home.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="libs/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="home">
+<!-- 
+
+1. 该页面,需要在 index.html里面的Vue的变量 isCloseAside 设置为true,意为关闭左侧边栏目;
+2. 更新的内容;默认所有body为hidden;
+3. 除了home.html外的其他html(index.html和login.html)需要添加一句代码 见下:
+4. index.css更新了对边框的隐藏;
+5. index更新了对ifreame边框的隐藏;
+6. ~~表格加入scope的索引;~~
+7.(忽略)弹出框,要更改为HTML片段的引入,如果是单一页面,则直接嵌入,比如这个页面;
+ -->
+<!-- margin:0 auto; -->
+<div id="home-content">
+	<!-- TopArea -->
+	<el-row id="wel">
+		<el-col :span="12" class="wel">
+			<!-- 头像 -->
+			<el-row>
+				<img :src="dom.avatr" alt="">
+				<ul id="wel-info">
+					<li>{{dom.name}}，欢迎登录！</li>
+					<li id="wel-last-date">上次登录：{{dom.lastTime}}</li>
+					<li @click="isPwdDialog=true">修改登录密码</li>
+				</ul>
+			</el-row>
+		</el-col>
+
+		<el-col :span="12" class="wel" id="count-box">
+			<el-row>
+				<el-col :span="8" class="count-box">
+					<div class="count-num">{{dom.stuWaitJoin}}</div>
+					<div class="count-name">待报名学员</div>
+				</el-col>
+				
+				<el-col :span="8" class="count-box">
+					<div class="count-num">{{dom.stuWaitCheck}}</div>
+					<div class="count-name">待审核学员</div>
+				</el-col>
+				
+				<el-col :span="8" class="count-box">
+					<div class="count-num">{{dom.stuChecked}}</div>
+					<div class="count-name">考试已通过学员</div>
+				</el-col>
+			</el-row>
+
+		</el-col>
+	</el-row>
+	
+	<!-- 表格内容 -->
+	<div id="table">
+		<div id="table-title">项目列表</div>
+
+		<template>
+			<el-table :data="vlist" :header-cell-style="{'background-color': '#fafafa','font-weight':'bold','font-size':'16px'}">
+				<el-table-column header-align="center" align="center" prop="pid" label="项目编号" ></el-table-column>
+				<el-table-column align="center" prop="pname" label="项目名称"></el-table-column>
+				<el-table-column align="center" prop="stuCount" label="学员总数"></el-table-column>
+				<el-table-column header-align="center" align="center" prop="dsCount" label="本部门学员数"></el-table-column>
+				<el-table-column header-align="center" align="center" label="操作" >
+					<template slot-scope="scope">
+						<el-button type="text" @click="handleDetail(scope.$index,scope.row)">查看详情</el-button>
+					</template>
+				</el-table-column>
+			</el-table>
+		</template>
+	</div>
+	
+	<!-- 表单详情页面 插件库 -->
+	<!-- <v-pd v-show="isDetailDialog"></v-pd> -->
+</div>
+
+<el-dialog title="修改密码" :visible.sync="isPwdDialog" width="36%" @close="handleClosePwdDialog('pwdForm')">
+
+	<el-form ref="pwdForm" status-icon :model="form" size="medium" :rules="rules" label-position="right" label-width="86px" style="box-sizing: border-box;padding-right:10px">
+		<el-form-item label="旧密码" prop="oldPwd">
+			<el-input v-model="form.oldPwd" placeholder="旧密码"></el-input>
+		</el-form-item>
+		
+		<el-form-item label="新密码" prop="newPwd">
+			<el-input type="password" v-model="form.newPwd" placeholder="新密码"></el-input>
+		</el-form-item>
+		
+		<el-form-item label="新密码" prop="checkPwd">
+			<el-input type="password" v-model="form.checkPwd" placeholder="请再次输入新密码"></el-input>
+		</el-form-item>
+		
+		<el-form-item style="text-align: right;">
+			<el-button @click="isPwdDialog=false">取消</el-button>
+			<el-button type="primary" @click="handlePwdChange('pwdForm')">确认</el-button>
+		</el-form-item>
+	</el-form>
+</el-dialog>
+</div>
+<script type="text/javascript">
+new Vue({
+	el:'#home',
+	data(){
+	
+	//密码校验规则;
+	var ruleCheckPwd = (rule, value, callback)=>{
+		// console.log('规则校验中.....');
+		// debugger;
+		if (value === '') {
+			// debugger;
+		  callback(new Error('请再次输入密码'));
+		} else if (value !== this.form.newPwd) {
+			// debugger;
+		  callback(new Error('两次输入密码不一致!'));
+		}else{
+			callback();
+		}
+	}
+	return{
+			//页面DOM渲染数据
+			dom:{
+				name:'王杰瑞',									//名字
+				avatr:'img/default_avatart2@2x.png',			//头像
+				lastTime:'2019年8月7日 星期三 15:12:22',			//上次登陆时间
+				stuWaitJoin:120,	//待报名学员
+				stuWaitCheck:130,	//待审核学员
+				stuChecked:66,		//考试已通过学员
+			},
+			//是否显示修改密码框;
+			isPwdDialog:false,
+			//是否显示详情框;
+			isDetailDialog:false,
+			//表单数据;
+			form:{
+				oldPwd:'',		//旧密码
+				newPwd:'',		//新密码
+				checkPwd:''		//新密码
+			},
+			//表单校验规则;
+			rules:{
+				oldPwd:[
+					{ required: true, message: '请输入旧密码', trigger: 'blur' },
+					{ min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+				],
+				newPwd:[
+					{ required: true, message: '请输入新密码', trigger: 'blur' },
+					{ min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+				],
+				checkPwd:[
+					{ required: true, message: '请正确输入新密码', trigger: 'blur' },
+					{ min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' },
+					{ validator: ruleCheckPwd, trigger: 'blur' }
+				]
+			},
+			//数据列表
+			vlist:[
+				{pid:'001',pname:'航空计划',stuCount:'166',dsCount:'15'},
+				{pid:'002',pname:'飞星计划',stuCount:'196',dsCount:'12'},
+				{pid:'003',pname:'铁路计划',stuCount:'200',dsCount:'11'},
+			],
+			
+			
+		}},
+		methods:{
+			// 查看下详情
+			handleDetail(idx,row){
+				console.log('索引: '+idx);
+				console.log('数据:',row);
+			},
+			// 修改密码
+			handlePwdChange(formName){
+
+				this.$refs[formName].validate((valid)=>{
+
+						if(valid){
+							//消息
+
+							this.$alert('修改成功!',{
+								confirmButtonText:'确认',
+								callback:action=>{
+									// this.isPwdDialog = false; //关闭对话框
+									console.log('提交密码3!')
+									this.$message({
+										type:'info',message:'请退出系统!'
+									});
+									
+								}
+							})
+						}else{
+
+							console.log('提交密码4!')
+							this.$message({
+								type:'warn',message:'修改密码失败!'
+							});
+							
+							return false;
+						}
+				});
+
+			},
+			//关闭对话框后,重置数据;
+			handleClosePwdDialog(formName){
+				this.$refs[formName].resetFields();
+			}
+
+		},mounted(){document.body.style.visibility="visible";}// 处理数据加载延迟;
+});
+</script>
+</body>
+</html>

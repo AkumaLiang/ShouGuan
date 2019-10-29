@@ -1,0 +1,73 @@
+
+#home-content{				/*整个容器*/
+	margin: 0 auto;
+	width: 80%;
+}
+#wel{						/*Top容器*/
+	background-color: #fff;
+	display: flex;
+	justify-content: space-around;
+	min-height: 271px;
+	padding: 50px 50px;
+}
+
+img{						/*头像*/
+	display: inline-block;
+	vertical-align: bottom;
+	width: 160px;
+	height: 160px;
+}
+ul{							/*显示基本欢迎信息[LEFT]*/
+	display: inline-block;
+	min-height: 160px;
+	margin-left: 20px;
+}
+li{
+	display: block;
+	margin: 19px 0;
+}
+
+li:first-child{
+	font-weight: 800;
+	font-size: 30px;
+}
+li:nth-of-type(2){
+	font-size: 16px;
+}
+li:last-child{
+	color: #5190EB;
+	background: url(../img/修改登录密码@2x.png) no-repeat;
+	background-size: contain;
+	padding-left: 26px;
+	cursor: pointer;
+}
+li:last-child:hover{
+	text-decoration: underline;
+}
+
+.count-box{					/*显示统计信息[RIGHT]*/
+	text-align: center;
+}
+.count-num{
+	margin-bottom: 29px;
+	font-size:48px;
+	font-weight:800;
+	color: #333;
+}
+.count-name{
+	font-size: 20px;
+}
+
+/* FOR Table */
+
+#table{
+	margin-top: 20px;
+	background: #fff;
+	padding: 29px 30px;
+}
+#table-title{
+	font-size: 26px;
+	color: #171717;
+	font-weight: bold;
+	margin-bottom: 24px;
+}

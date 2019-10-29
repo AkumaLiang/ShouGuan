@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>表单测试页面</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/xdialog.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="../../libs/vue.js"></script>
+	<script src="../../libs/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="dialog-test">
+	
+	<!-- 按钮区域 -->
+	<el-button @click="isdialogTestInfo=true">考试信息</el-button>
+	<el-button @click="isdialogTestSto=true">安排考试</el-button>
+	
+	<!-- 考试 -->
+	<dialog-testinfo :v_test_info="vTestInfo" :read_only="isReadOnly"></dialog-testinfo>
+	<dialog-test-seto></dialog-test-seto>
+
+</div>
+</body>
+<script type="text/javascript">
+new Vue({
+	el:'#dialog-test',
+	data(){return{
+		isdialogTestInfo:false,		//考试信息
+		isReadOnly:true,			//只读(查看,审核需要设置为false)
+		
+		isdialogTestSto:false,		//安排考试
+		
+		//【考试信息】=>dialog-testinfo.vue
+		//查看和审核;
+		//考试数据
+		vTestInfo:{
+			addr:'河北师范大学公教楼A109',//班级
+			vclass:'三二班',				//考试
+			dtime:'2019年9月2日 15:13',	//时间
+		},
+		
+	}},
+	mounted(){document.body.style.visibility="visible"},
+	components:{
+		'dialog-testinfo':httpVueLoader('dialog-testinfo.vue'),
+		'dialog-test-seto':httpVueLoader('dialog-test-seto.vue'),
+	}
+});
+</script>
+</html>
