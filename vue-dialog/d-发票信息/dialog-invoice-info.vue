@@ -165,7 +165,8 @@ module.exports = {
 			invoiceCourierNo:'',		//发票
 			invoiceCourierName:'',
 			materialCourierNo:'',		//教材
-			materialCourierName:''
+			materialCourierName:'',
+			materialType:this.v_invoice.materialType,
 		}
 	}},
 	props:{
@@ -176,6 +177,9 @@ module.exports = {
 		submitForm(){
 			console.log(this.vform);
 		}
+	},
+	mounted(){
+		console.log(this.vform.materialType);
 	}
 }
 </script>

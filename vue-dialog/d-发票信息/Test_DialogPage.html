@@ -19,9 +19,8 @@
 	<el-button @click="isdialogInvoiceSeto=true">申请开票</el-button>
 	<el-button @click="handelKp">申请开票2</el-button>
 	
-	<dialog-invoice-info :v_invoice="vInvoice" :_is_only_show="isOnlyShow"></dialog-invoice-info>
-	
-	
+	<dialog-invoice-info v-if="isdialogInvoice" :v_invoice="vInvoice" :_is_only_show="isOnlyShow" ></dialog-invoice-info>
+
 	<dialog-invoice-seto :v_base_info="v_base_info" ></dialog-invoice-seto>
 	
 </div>
@@ -48,7 +47,7 @@ new Vue({
 			mobile:'15232100000',
 			address:'河北省石家庄市裕华区长江大道100号',
 			// line;
-			materialType:0,		//  教材邮寄  1是  0否
+			materialType:1,		//  教材邮寄  1是  0否
 			mailType:1,			//邮寄方式  1单独邮寄  0统一邮寄
 			post_code:'20190101010100',
 			post_company:'顺丰',
