@@ -100,7 +100,7 @@
 				<br>
 				
 				<!-- 统一邮寄 -->
-				<div v-if="vform.mailType==1">
+				<div v-if="vform.mailType==0">
 					<el-form-item label="快递单号: ">
 						<el-input v-model="vform.invoiceCourierNo"></el-input>
 					</el-form-item>
@@ -123,15 +123,17 @@
 						  </el-select>
 					</el-form-item>
 					
-					<el-form-item label="教材快递单号: ">
-						<el-input v-model="vform.materialCourierNo"></el-input>
-					</el-form-item>
-					
-					<el-form-item label="教材快递公司: ">
-						<el-select v-model="vform.materialCourierName">
-						    <el-option v-for="item in postCompany" :key="item" :label="item" :value="item"></el-option>
-						  </el-select>
-					</el-form-item>
+					<div v-if="v_invoice.materialType==1">
+						<el-form-item label="教材快递单号: ">
+							<el-input v-model="vform.materialCourierNo"></el-input>
+						</el-form-item>
+						
+						<el-form-item label="教材快递公司: ">
+							<el-select v-model="vform.materialCourierName">
+							    <el-option v-for="item in postCompany" :key="item" :label="item" :value="item"></el-option>
+							  </el-select>
+						</el-form-item>
+					</div>
 				</div>
 			
 			</el-form>
@@ -178,16 +180,4 @@ module.exports = {
 }
 </script>
 
-<style>
-.el-col:first-child{
-	/* color: red; */
-	text-align: right;
-}
-.el-col:last-child{
-	/* color: blue; */
-	/* text-align: right; */
-}
-.xdialog .el-dialog__body{
-	padding: 0;
-}
-</style>
+<style scoped>.el-col:first-child{text-align:right;}.xdialog.el-dialog__body{padding:0;}.xdialog-invoice{padding-top:3rem!important;padding-bottom:2rem!important;}</style>
