@@ -62,6 +62,7 @@ module.exports = {
 		vCause:'',		//提交原因;
 		v_face_teach_info:[],
 		v_test_info:{},
+		loading:null
 	}},
 	props:{
 		_v_face_teach_info:Array,
@@ -74,7 +75,21 @@ module.exports = {
 		},
 		//申请修改
 		updateFaceTeach(){
+			
 			console.log(this.vCause);
+			// 生成一个加载对象;
+			this.loading = this.$loading({
+				lock: true,
+				text: 'Loading',
+				spinner: 'el-icon-loading',
+				background: 'rgba(0, 0, 0, 0.7)'
+			});
+			
+			// 2秒后自动关闭
+			setTimeout(()=>{
+				this.loading.close();
+			},2000);
+			
 		}
 		
 	},
@@ -99,7 +114,7 @@ module.exports = {
 		
 	},
 	created(){
-		
+		console.log("Hello ?");
 	}
 }
 </script>

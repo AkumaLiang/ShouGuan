@@ -11,6 +11,13 @@
 	<script src="libs/vue.js"></script>
 	<script src="libs/httpVueLoader.js"></script>
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<style type="text/css">
+		::-webkit-scrollbar{width:10px;height:10px;background-color:dimgrey;}
+		::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);border-radius:10px;background-color:#F5F5F5;}
+		::-webkit-scrollbar-thumb{border-radius:10px;-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);background-color:slategray;}
+		.def-point{position: relative;}
+		.def-point i{display:block;position:absolute;top:0;right:0;height:8px;width:8px;border-radius:50%;background-color:red;}
+	</style>
 </head>
 <body>
 
@@ -30,7 +37,7 @@
 		
 		<!-- 三个标准按钮 -->
 		<span>
-			<button class="def-btn"></button>
+			<button class="def-btn def-point"><i></i></button>
 			<button class="def-btn"></button>
 			<button class="def-btn" @click="exitSys"></button>
 		</span>

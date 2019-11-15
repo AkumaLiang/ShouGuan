@@ -13,12 +13,24 @@
  /* 导航列表的样式 */
 #mItemTarget li:hover{background-color: #363f4b;cursor: pointer;}
 /* Header 头部的样式 ****************/
-#header{height: auto!important; /*奇怪的地方出现了 height:60px*/padding: 0; margin: 0;}
+#header{height: auto!important; /*奇怪的地方出现了 height:60px*/padding: 0; margin: 0;
+min-width: 1893px;
+}
 #header :not(i){display: inline-block;}
 /* Logo 的图片放置 */
 #logo{display: inline-block;width:220px;height:62px;margin: 10px 30px;	/* 关联点 */}
 /* 菜单按钮列表 */
-#header ul{vertical-align: top;line-height: 82px;margin-left: 52px;;}
+#header ul{
+	vertical-align: top;
+	line-height: 82px;
+	overflow-x: overlay;
+	margin-left: 52px;
+	max-width: 1072px;
+	height: 82px;
+	white-space: nowrap;
+}
+
+
 #header li{margin-right: 56px;cursor: pointer;}
 /* #header右边功能块 */
 #baseRigth{float: right;}

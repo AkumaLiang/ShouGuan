@@ -55,10 +55,14 @@
 	</el-form-item>
 	
 	<!-- 上传图片 -->
-	<!-- <el-upload style="display: none;"
+	<el-upload style="display: none;"
+		:headers="{'Access-Control-Allow-Origin': '*'}"
 		:action="upload_url"
 		:on-preview="handlePreview"
-	><el-button id="elupload" size="small" type="primary"></el-button></el-upload> -->
+		:on-success="handleUploadSuccess"
+		:on-error="handleUploadError"
+		accept="image/*"
+	><el-button id="elupload" size="small" type="primary"></el-button></el-upload>
 	
 	<el-form-item label="项目介绍" prop="proInfo">
 		<!-- 隐藏域 -->
@@ -181,7 +185,7 @@ module.exports = {
 		}
 		
 		return{
-		// upload_url:'https://jsonplaceholder.typicode.com/posts/',	//图片上传地址;
+		upload_url:'https://jsonplaceholder.typicode.com/posts/',	//图片上传地址;
 		setf:null,
 		quill:null,	//编辑器
 		//表单数据
@@ -258,7 +262,32 @@ module.exports = {
 	},
 	methods:{
 		handlePreview(f){
+			console.log('响应上传!');
 			console.log(f,f.response);
+			let iurl = 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100';
+			this.quill.insertEmbed(10,'image',iurl);
+		},
+		handleUploadSuccess(r,f,fList){
+			this.$message.error({
+				message:'图片上传成功!',
+				type: 'success',
+				duration:2000
+			});
+			let range = this.quill.getSelection().index;
+			console.log('成功! upload',r,range);
+			
+			let iurl = 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100';
+			
+			this.quill.insertEmbed(range,'image',iurl);
+		},
+		handleUploadError(e,f,fList){
+			
+			this.$message.error({
+				message:'图片上传失败!',
+				type: 'error',
+				duration:2000
+			});
+			console.log('失败!,error',e);
 		},
 		//colser panel
 		comTrigger(){
@@ -378,7 +407,21 @@ module.exports = {
 				this.quill = new Quill('#editor',{
 					modules:{
 						syntax: true,
-						toolbar: '#editor-toolbar',
+						toolbar:
+		{
+    		container:'#editor-toolbar',
+    		handlers:
+    		{
+    			'image':function(val){
+    				if(val){
+    				    //对指定的Dom执行Click,触发图片上传点击按钮;
+    					document.querySelector('#elupload').click()
+    				}else{
+    					this.quill.format('image', false);
+    				}
+    			}
+    		}
+		},
 					},
 					theme:'snow',
 					placeholder: '在此输入内容...',
@@ -420,7 +463,6 @@ module.exports = {
 		//文件移除时
 		handleOnRemove(f,fList){
 			console.log(f,fList);
-			
 		}
 
 		

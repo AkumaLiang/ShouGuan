@@ -34,6 +34,32 @@ var NavData = {
 			{name:"部门管理",img:ipath+"部门管理3@2x.png",url:"/vorg1",arg:'{}'},
 			{name:"成员管理",img:ipath+"成员管理@2x.png",url:"/vorg2",arg:'{}'},
 			{name:"角色管理",img:ipath+"角色管理@2x.png",url:"/vorg3",arg:'{}'}
+		]},
+		
+		//溢出测试
+		//溢出测试
+		{name:"组织架构",img:mpath+"组织架构1@2x.png",hover:"组织架构2@2x.png",imgf:ipath+'组织架构3@2x.png',item:[
+			{name:"部门管理",img:ipath+"部门管理3@2x.png",url:"/vorg1",arg:'{}'},
+			{name:"成员管理",img:ipath+"成员管理@2x.png",url:"/vorg2",arg:'{}'},
+			{name:"角色管理",img:ipath+"角色管理@2x.png",url:"/vorg3",arg:'{}'}
+		]},
+		//溢出测试
+		{name:"组织架构",img:mpath+"组织架构1@2x.png",hover:"组织架构2@2x.png",imgf:ipath+'组织架构3@2x.png',item:[
+			{name:"部门管理",img:ipath+"部门管理3@2x.png",url:"/vorg1",arg:'{}'},
+			{name:"成员管理",img:ipath+"成员管理@2x.png",url:"/vorg2",arg:'{}'},
+			{name:"角色管理",img:ipath+"角色管理@2x.png",url:"/vorg3",arg:'{}'}
+		]},
+		//溢出测试
+		{name:"组织架构",img:mpath+"组织架构1@2x.png",hover:"组织架构2@2x.png",imgf:ipath+'组织架构3@2x.png',item:[
+			{name:"部门管理",img:ipath+"部门管理3@2x.png",url:"/vorg1",arg:'{}'},
+			{name:"成员管理",img:ipath+"成员管理@2x.png",url:"/vorg2",arg:'{}'},
+			{name:"角色管理",img:ipath+"角色管理@2x.png",url:"/vorg3",arg:'{}'}
+		]},
+		//溢出测试
+		{name:"组织架构",img:mpath+"组织架构1@2x.png",hover:"组织架构2@2x.png",imgf:ipath+'组织架构3@2x.png',item:[
+			{name:"部门管理",img:ipath+"部门管理3@2x.png",url:"/vorg1",arg:'{}'},
+			{name:"成员管理",img:ipath+"成员管理@2x.png",url:"/vorg2",arg:'{}'},
+			{name:"角色管理",img:ipath+"角色管理@2x.png",url:"/vorg3",arg:'{}'}
 		]}
 	],
 	// 一级管理员:财务

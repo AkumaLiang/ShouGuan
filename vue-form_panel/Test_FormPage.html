@@ -31,6 +31,7 @@
 	<!-- 添加公告 建议使用v-if -->
 	<!-- <add-notice></add-notice> -->
 	
+	<el-input v-model="test" @keyup.enter.native="msg"></el-input>
 </div>
 
 <script>
@@ -39,7 +40,13 @@ new Vue({
 	data(){return{
 		isSubPanel:false,
 		isNewStuPanel:true,
+		test:'',
 	}},mounted(){document.body.style.visibility="visible"},
+	methods:{
+		msg(){
+			alert("hello");
+		}
+	},
 	components:{
 		
 		// 新增部门

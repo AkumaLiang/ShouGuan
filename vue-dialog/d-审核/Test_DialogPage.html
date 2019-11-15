@@ -16,12 +16,11 @@
 <div id="dialog-test">
 	<el-button @click="isStuCheck=true">学员审核</el-button>
 	<el-button @click="isStuCheck2=true">学员审核2</el-button>
-	
-	<!-- 无图 -->
+	<img @click="show($event)" src="http://img0.imgtn.bdimg.com/it/u=3977969659,1596173571&fm=26&gp=0.jpg" alt="">	<!-- 无图 -->
 	<dialog-stu-check v-if="isStuCheck" :stuinfo="stuinfo"></dialog-stu-check>
 	<!-- 有图 -->
 	<dialog-stu-check2 v-if="isStuCheck2" :stuinfo="stuinfo"></dialog-stu-check2>
-
+	
 </div>
 </body>
 
@@ -36,7 +35,7 @@ new Vue({
 			
 			// dialog-stu-check.vue的数据
 			stuCompanyName:'------',
-			stuEin:'------',
+			// stuEin:'------',
 			tisName:'------',
 			stuRemittanceDate:'------',
 			stuName:'------',
@@ -59,7 +58,7 @@ new Vue({
 			//check-stu-check2.vue新增的
 			
 			//其他信息
-			stuOtherInfo:'---------------------------------------------------------------------------',
+			// stuOtherInfo:'---------------------------------------------------------------------------',
 			stuRecord:'------',		//学历
 			stuWord:'------',		//职称
 			stuWorkUnit:'------',	//工作单位
@@ -72,12 +71,12 @@ new Vue({
 			
 			
 			// 图片信息
-			stuRecordPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
-			stuCertificatePic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
-			stuWordCertPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			// stuRecordPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			// stuCertificatePic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			// stuWordCertPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
 			stuCardPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
 			stuPhotoPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
-			stuProDeclarPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
+			// stuProDeclarPic:"https://element.eleme.cn/2.0/static/hamburger.50e4091.png",
 			
 			//其他信息的图片
 			stuOtherPic:[
@@ -89,7 +88,9 @@ new Vue({
 	}},
 	mounted(){document.body.style.visibility="visible"},
 	methods:{
-		
+		show(e){
+			console.log(e.srcElement.currentSrc);
+		}
 	},
 	components:{
 	'dialog-stu-check':httpVueLoader('dialog-stu-check.vue'),

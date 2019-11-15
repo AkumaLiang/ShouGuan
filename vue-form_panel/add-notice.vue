@@ -1,6 +1,6 @@
 <template>
 <!-- 添加公告 add-notice-->
-<el-dialog title="添加公告" width="40%" :visible.sync="$parent.isSubPanel">
+<el-dialog title="添加公告" width="56%" :visible.sync="$parent.isSubPanel">
 <el-form id="vform" ref="vform" :model="vform" :rules="rules" label-position="right" label-width="92px">
 	<el-form-item label="标题 :" prop="msTitle" >
 		<el-input v-model="vform.msTitle"></el-input>

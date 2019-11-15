@@ -33,16 +33,16 @@
 		<!-- 容器块 -->
 		<el-row>
 			<!-- 消息列表 -->
-			<!-- <ul class="msg-list">
+			<ul v-if="false" class="msg-list">
 				<li v-for="item in msgList" :key="item.id" @click="goto(item.id)">
 					<span>{{item.msg}}</span>
 					<span class="msg-dt"></span>
 				</li>
-			</ul> -->
+			</ul>
 			
 			
 			<!-- <div class="x-sub">{{item.dt}}</div> -->
-			<el-collapse v-model="activeNames" :accordion="true">
+			<el-collapse v-else v-model="activeNames" :accordion="true">
 			  <el-collapse-item class="x-main" v-for="(item,k) in msgList" :key="k" @click="goto(item.id)"   :name="k+1">
 				<template slot="title">
 				      学员审核通知<i class="ix" style="float: right;">{{item.dt}}</i>

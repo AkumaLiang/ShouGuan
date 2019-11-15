@@ -10,7 +10,11 @@
 		<el-row class="box-view" v-for="(v,k) in vFaceTeachInfo" :key="k" style="padding-bottom: 0;">
 			<div class="box-title">第{{k+1}}天</div>
 			<el-form-item label="时间：">
-				<el-date-picker class="mwidth" v-model="vFaceTeachInfo[k].faceDetailTime" type="datetime" placeholder="选择日期时间" format="yyyy 年 MM 月 dd 日 HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"> </el-date-picker>
+				<!-- 选择日期的Bug问题 -->
+				<!-- format="yyyy年MM月dd日 HH:mm:ss" -->
+				<!-- format="yyyy 年 MM 月 dd 日 HH:mm:ss" -->
+				<!-- format="yyyy-MM-dd HH:mm:ss" -->
+				<el-date-picker class="mwidth" v-model="vFaceTeachInfo[k].faceDetailTime" type="datetime" placeholder="选择日期时间" format="yyyy年MM月dd日 HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"> </el-date-picker>
 			</el-form-item>
 			
 			<el-form-item label="老师名字：">
@@ -104,7 +108,20 @@ module.exports = {
 			})
 		},
 		submitForm(){
-			console.log(this.vFaceTeachInfo,this.vTestInfo);
+			// 遍历数组
+			for(let i=0;i<this.vFaceTeachInfo.length;i++){
+				//遍历数组的的对象
+				for(v in this.vFaceTeachInfo[i]){
+					console.log(v);
+					console.log(this.vFaceTeachInfo[i][v]);
+					if(this.vFaceTeachInfo[i][v]=='' || this.vFaceTeachInfo[i][v]==0){
+						window.alert('请填写完整内容!');
+						return;
+					}
+				}
+			}
+			
+			// console.log(this.vFaceTeachInfo,this.vTestInfo);
 		}
 	},
 	created(){

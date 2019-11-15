@@ -4,3 +4,6 @@
 .xtitle li:hover{cursor: pointer;opacity: .8;}
 .xtitle-active{border-bottom: solid 3px #589ade;color: #589ade!important;}
 .xtitle{border-bottom: solid 1px gainsboro;}
+.xtitle a{
+	color: inherit;
+}

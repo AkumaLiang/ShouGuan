@@ -83,6 +83,8 @@ module.exports = {
 		stuinfo:Object
 	},
 	methods:{
+		
+		
 		//通过
 		confirm(){
 			alert('通过');
@@ -101,5 +103,18 @@ module.exports = {
 </script>
 
 <style>
-.key{display:inline-block;width:139px;text-align:right}.val{padding-left:12px}.lrow{padding:13px 0}.ltitle{border-left:3px #1abc9c solid;padding-left:6px;margin-left:14px}.ltext{box-sizing:border-box;padding:20px;line-height:23px}.limg-list{box-sizing:border-box;padding:20px}.limg{height:94px;width:94px}.lbtn{padding:9px 33px}
+.key {
+    display: inline-block;
+    width: 139px;
+    text-align: right;
+    vertical-align: top;
+}
+
+.val {
+    padding-left: 12px;
+    display: inline-block;
+    width: 222px;
+}
+
+.lrow{padding:13px 0}.ltitle{border-left:3px #1abc9c solid;padding-left:6px;margin-left:14px}.ltext{box-sizing:border-box;padding:20px;line-height:23px}.limg-list{box-sizing:border-box;padding:20px}.limg{height:94px;width:94px}.lbtn{padding:9px 33px}
 </style>

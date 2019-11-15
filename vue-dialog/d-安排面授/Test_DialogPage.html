@@ -5,21 +5,37 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>表单测试页面</title>
-	<link rel="stylesheet" type="text/css" href="css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/base.css"/>
 	<link rel="stylesheet" type="text/css" href="../../css/xdialog.css"/>
 	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	<script src="../../libs/vue.js"></script>
 	<script src="../../libs/httpVueLoader.js"></script>
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../libs/base-vtitle/base-vtitle.css"/>
+	<script src="../../libs/base-vtitle/base-vtitle.js" type="text/javascript" charset="utf-8"></script>
+	<style type="text/css">
+			
+		p{
+			caption-side: bottom!important;
+		}
+	</style>
 </head>
 <body>
 <div id="dialog-test">
+	
+	<ul class="xtitle">
+		<li @click="handleClick(1)">hellod</li>
+		<li @click="handleClick(2)">hellod</li>
+		<li @click="handleClick(3)">hellod</li>
+	</ul>
 	
 	<el-button @click="isdialogTeachInfo=true">面授信息</el-button>
 	<el-button @click="testChange">面授2信息</el-button>
 	<el-button @click="isdialogFaceSeto=true">安排面试</el-button>
 	
-
+	
+	
+	
 	<dialog-face-teachinfo :_v_face_teach_info="vFaceTeachInfo" :_v_test_info="vTestInfo" ></dialog-face-teachinfo>
 	<dialog-face-seto  :_v_face_teach_info="vFaceTeachInfo" :_v_test_info="vTestInfo"></dialog-face-seto>
 	
@@ -30,7 +46,7 @@
 new Vue({
 	el:'#dialog-test',
 	data(){return{
-		isdialogTeachInfo:true,	//面授信息
+		isdialogTeachInfo:false,//面授信息
 		isdialogFaceSeto:false,	//安排面授
 
 		//【面授信息】=================================>dialog-face-teachinfo.vue
@@ -64,6 +80,10 @@ new Vue({
 			this.isdialogTeachInfo=true;
 			this.vFaceTeachInfo[0].faceDetailTeacher="皮卡丘";
 		},
+		//标签发生更改的事件
+		handleClick(id){
+			console.log(id);
+		}
 	},
 	mounted(){document.body.style.visibility="visible"},
 	components:{

@@ -1,4 +1,5 @@
 <template>
+<div>
 <el-dialog title="新增学员" :visible.sync="$parent.isNewStuPanel" :before-close="dialogBeforClose">
 	<!--isViewStu -->
 	<el-form id="#new-stu-form" :rules="form_rules" ref="vform"  :model="form" label-position="right" label-width="86px">
@@ -8,7 +9,7 @@
 					<el-col :span="11">
 						<el-form-item label="所属部门 :" prop="department">
 							<el-select placeholder="请选择部门" v-model="form.department">
-								<el-option v-for="item in opt_department" :key="item.value" :label="item.label" :value="item.value"></el-option>
+								<el-option  v-for="item in opt_department" :key="item.value" :label="item.label" :value="item.value"></el-option>
 							</el-select>
 						</el-form-item>
 						
@@ -116,7 +117,7 @@
 				<el-col :span="12">
 					<!-- <input type="file" name="" id="ty" value="" /> -->
 					<el-form-item label="学历 :" id="x-edu" prop="xEdu" v-if="bind.xli2">
-						<el-upload action="" :limit="1" :auto-upload="false" :on-remove="delFile_Edu" :on-change="handleFileChange_Edu" list-type="picture-card" ><i class="el-icon-plus"></i></el-upload>
+						<el-upload :on-preview="handlePictureCardPreview" action="" scoped-slot :limit="1" :auto-upload="false" :on-remove="delFile_Edu" :on-change="handleFileChange_Edu" list-type="picture-card" ><i class="el-icon-plus"></i></el-upload>
 					</el-form-item>
 					
 					<el-form-item label="工作证明 :" id="x-job" prop="xJob" v-if="bind.gzzm">
@@ -183,7 +184,13 @@
 			<el-button @click="comTrigger" type="primary" plain>取消</el-button>
 		</div>
 	</el-form>
+	
+	<el-dialog :visible.sync="imgUrl.dialogVisible" append-to-body>
+	  <img width="100%" :src="imgUrl.dialogImgUrl" alt="">
+	</el-dialog>
 </el-dialog>
+	
+</div>
 </template>
 
 <script>
@@ -573,9 +580,9 @@ module.exports = {
 		
 		// 使用这个方法,更新页面状态;
 		getProJson(json){
-			
+			//PS如果出现问题,将字段设置为Flase试试;
 			if(json==''){return};
-			console.log('Hello ??');
+			
 			//数据重置
 			this.otherShow = false;
 			this.pictureShow = false;
@@ -584,7 +591,7 @@ module.exports = {
 				this.bind[i] = false;
 			}
 
-			// console.log(this.bind);
+
 			
 			try{
 				let obj = JSON.parse(json);
@@ -636,16 +643,26 @@ module.exports = {
 		handleProChange(pro){
 			console.log('project handle change ');
 			console.log('项目发生改变: ',pro);
+			let j1 = '[{"id":0,"sid":["gznx","zcheng"]}]';
+			let j2 = '[{"id":0,"sid":["gznx"]},{"id":1,"sid":["xli2","zshu","gzzm","sfz","zpian","xmsbb"]},{"id":2,"sid":["text","file"]}]'
+			
+			if(pro==1){
+				this.getProJson(j1);
+			}else if(pro==2){
+				this.getProJson(j2);
+			}else if(pro==3){
+				this.getProJson(j3);
+			}
+			
 			
 		}
 	},
 	mounted(){document.body.style.visibility="visible";},// 处理数据加载延迟;
 	created(){
 		console.log('open add student vue ');
-		let jstr = '[{"id":0,"sid":["zcheng","gznx"]},{"id":1,"sid":["xli2","zshu","sfz","gzzm"]},{"id":2,"sid":["text","file"]}]';
-		// let json = '[{"id":0,"sid":[{"sid":"zcheng","name":"职称"},{"sid":"xli","name":"学历"}]},{"id":1,"sid":[{"sid":"xli2","name":"学历"},{"sid":"zshu","name":"证书"},{"sid":"gzzm","name":"工作证明"}]},{"id":2,"sid":[{"sid":"text","name":"文字信息"},{"sid":"file","name":"文件信息"}]}]';
-
-		this.getProJson(jstr);
+		//let jstr = '[{"id":0,"sid":["zcheng","gznx"]},{"id":1,"sid":["xli2","zshu","sfz","gzzm"]},{"id":2,"sid":["text","file"]}]';
+		
+		// this.getProJson(jstr);
 		
 	}
 };

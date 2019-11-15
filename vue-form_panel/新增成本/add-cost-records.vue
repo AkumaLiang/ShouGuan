@@ -3,16 +3,16 @@
 <el-row type="flex" justify="space-between">
     <el-col id="vform">
 		<div class="vtitle">添加成本记录</div>
-        <el-form id="vform-content" :model="vform" label-position="right" label-width="192px" ref="vform" :rules="rules">
+        <el-form id="vform-content" :model="vform" label-position="right" label-width="122px" ref="vform" :rules="rules">
 
 			<!-- 选择时间 -->
             <el-form-item label="时间段 ：" id="timefocus" prop="date">
-				<el-date-picker value-format="yyyy-MM-dd" v-model="vform.time" @change="handleDtChange" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :clearable="false" :editable="false"></el-date-picker>
+				<el-date-picker value-format="yyyy-MM-dd" style="width: 73%;" v-model="vform.time" @change="handleDtChange" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :clearable="false" :editable="false"></el-date-picker>
             </el-form-item>
 
 			<!-- 选择项目 -->
             <el-form-item label="项目 ：" v-if="projList.length"  prop="project">
-				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" :disabled="!isGetTime" @change="handleCheckAllChange">全选</el-checkbox>
                 <el-checkbox-group v-model="vform.projId"  id="vform-content-projects" @change="handleProChecke" >
 					<el-checkbox v-for="item in projList" :checked="item.checked" :label="item.label" :key="item.label" name="type">{{item.name}}</el-checkbox>
                 </el-checkbox-group>
@@ -59,13 +59,7 @@
                 <el-col :span="13"><el-input v-model.number="vform.misceFee" @keyup.native="setLr"></el-input></el-col>
                 <el-col :offset="1" :span="2">元</el-col>
             </el-form-item>
-			<!-- 提交按钮 -->
-            <el-form-item>
-				<el-col :span="20" style="text-align: right;">
-					<el-button type="primary" @click="submitForm('vform')">提交</el-button>
-					<el-button @click="$parent.isSubPanel=false">取消</el-button>
-				</el-col>
-            </el-form-item>
+			
         </el-form>
     </el-col>
 	<!-- 表格 -->
@@ -91,6 +85,11 @@
         </div>
     </el-col>
 </el-row>
+<!-- 提交按钮 -->
+		<div style="margin: 0 auto; width: 226px;background-color: red;">
+			<el-button type="primary" @click="submitForm('vform')">提交</el-button>
+			<el-button @click="$parent.isSubPanel=false">取消</el-button>
+		</div>
 </el-dialog>
 </template>
 
@@ -350,7 +349,13 @@ module.exports = {
 		},
 		//项目全选(选择checkBox)
 		handleCheckAllChange(val){
-			if(!this.isGetTime){alert('请先选择时间!');val=false;}
+			if(!this.isGetTime){
+				this.vform.projId = [];
+				this.isIndeterminate = false;
+				this.vform.selectList = [];
+				alert('请先选择时间!');
+				return;
+			}
 			//全选
 			if(val){
 				for(let i=0;i<this.projList.length;i++){
@@ -368,6 +373,7 @@ module.exports = {
 				this.isIndeterminate = false;
 				this.vform.selectList = [];
 			}
+			// if(!this.isGetTime){this.checkAll=false;}
 		},
 		//项目发生改变(选择checkBox)
 		handleProChecke(value){
@@ -413,6 +419,13 @@ module.exports = {
 		//提交表单
 		submitForm(formName){
 			
+			for(let i=0;i<this.vform.selectList.length;i++){
+				for(v in this.vform.selectList[i]){
+					if(this.vform.selectList[i][v]==''){ alert("请填写完整!");return;}
+				}
+			}
+			
+			return;
 			this.$refs[formName].validate((valid) => {
 			  if (valid) {
 
@@ -429,6 +442,9 @@ module.exports = {
 				 		projProfit:this.vform.selectList[i].result,
 				 	})
 				 }
+				 
+				 
+				 
 				 //获取表单
 				 let form = {
 				 	startTime:this.vform.startTime,		//开始时间
@@ -480,7 +496,7 @@ module.exports = {
 
 
 		},
-
+		
 	},
 	
 	created(){
@@ -510,14 +526,18 @@ module.exports = {
 				projShare:200		,//提成(已设置的);
 			}
 		]
+		/*
 		//时间.项目.[1.2.3];
 		this.setToForm(
 		//参数:
 		//时间,项目,[杂费-房租-工作(具体看函数顺序)]
 		["2019-10-29", "2019-11-21"],pro,100,100,100);
+		*/
 	},
 	mounted(){document.body.style.visibility="visible";},
 		
 }
 </script>
-<style scoped>#vform{box-sizing:border-box}#vform.el-form-item__label{font-weight:bold}#vform-content{box-sizing:border-box;width:94%;border-right:solid 1px#000}.vtitle{font-size:18px;font-weight:bold}#vform-content-projects{max-width:530px}#ftrtd tr td{color:#888b92}#ftrtd{border-collapse:collapse}#ftrtd tr{height:42px;border:none;border-bottom:solid 1px#ebeef5}.last-td{text-align:right;padding-right:64px}</style>
+<style scoped>
+
+#vtable{overflow: overlay;}#vform{box-sizing:border-box}#vform.el-form-item__label{font-weight:bold}#vform-content{box-sizing:border-box;width:94%;border-right:solid 1px#000}.vtitle{font-size:18px;font-weight:bold}#vform-content-projects{max-width:530px}#ftrtd tr td{color:#888b92}#ftrtd{border-collapse:collapse}#ftrtd tr{height:42px;border:none;border-bottom:solid 1px#ebeef5}.last-td{text-align:right;padding-right:64px}</style>
